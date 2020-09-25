@@ -21,8 +21,11 @@ package org.apache.hudi.common.model;
 
 /**
  * Types of lower level I/O operations done on each file slice.
+ *
+ * 文件片的 IO 操作。
  */
 public enum IOType {
+  // 合并、创建、附加
   MERGE,
   CREATE,
   APPEND

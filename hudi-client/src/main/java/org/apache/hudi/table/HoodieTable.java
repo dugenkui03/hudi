@@ -80,11 +80,16 @@ import java.util.stream.Stream;
 
 /**
  * Abstract implementation of a HoodieTable.
+ *
+ * fixme 抽象类
  */
 public abstract class HoodieTable<T extends HoodieRecordPayload> implements Serializable {
 
   private static final Logger LOG = LogManager.getLogger(HoodieTable.class);
 
+  /**
+   * fixme 写配置、表元数据客户端、索引
+   */
   protected final HoodieWriteConfig config;
   protected final HoodieTableMetaClient metaClient;
   protected final HoodieIndex<T> index;

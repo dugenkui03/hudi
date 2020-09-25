@@ -44,8 +44,8 @@ import scala.Tuple2;
 import static org.apache.hudi.index.HoodieIndexUtils.getLatestBaseFilesForAllPartitions;
 
 /**
- * A simple index which reads interested fields(record key and partition path) from base files and
- * joins with incoming records to find the tagged location.
+ * A simple index which reads interested fields(record key and partition path) from base files
+ * and joins with incoming records to find the tagged location.
  *
  * @param <T>
  */
@@ -56,9 +56,10 @@ public class HoodieSimpleIndex<T extends HoodieRecordPayload> extends HoodieInde
   }
 
   @Override
-  public JavaRDD<WriteStatus> updateLocation(JavaRDD<WriteStatus> writeStatusRDD, JavaSparkContext jsc,
+  public JavaRDD<WriteStatus> updateLocation(JavaRDD<WriteStatus> writeStatusRDD,
+                                             JavaSparkContext jsc,
                                              HoodieTable<T> hoodieTable) {
-    return writeStatusRDD;
+      return writeStatusRDD;
   }
 
   @Override
@@ -82,9 +83,10 @@ public class HoodieSimpleIndex<T extends HoodieRecordPayload> extends HoodieInde
   }
 
   @Override
-  public JavaRDD<HoodieRecord<T>> tagLocation(JavaRDD<HoodieRecord<T>> recordRDD, JavaSparkContext jsc,
+  public JavaRDD<HoodieRecord<T>> tagLocation(JavaRDD<HoodieRecord<T>> recordRDD,
+                                              JavaSparkContext jsc,
                                               HoodieTable<T> hoodieTable) {
-    return tagLocationInternal(recordRDD, jsc, hoodieTable);
+      return tagLocationInternal(recordRDD, jsc, hoodieTable);
   }
 
   /**

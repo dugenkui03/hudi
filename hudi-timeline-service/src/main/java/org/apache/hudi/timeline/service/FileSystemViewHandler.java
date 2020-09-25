@@ -53,8 +53,10 @@ import java.util.stream.Collectors;
  */
 public class FileSystemViewHandler {
 
-  private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+  // 静态日志类
   private static final Logger LOG = LogManager.getLogger(FileSystemViewHandler.class);
+
+  private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
   private final FileSystemViewManager viewManager;
   private final Javalin app;

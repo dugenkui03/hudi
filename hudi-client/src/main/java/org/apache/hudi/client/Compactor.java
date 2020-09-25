@@ -31,12 +31,16 @@ import java.io.Serializable;
 
 /**
  * Run one round of compaction.
+ *
+ * "进行一轮压缩操作"
  */
 public class Compactor implements Serializable {
 
   private static final long serialVersionUID = 1L;
+
   private static final Logger LOG = LogManager.getLogger(Compactor.class);
 
+  // 写 客户端
   private transient HoodieWriteClient compactionClient;
 
   public Compactor(HoodieWriteClient compactionClient) {

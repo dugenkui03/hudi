@@ -27,16 +27,20 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * A Hoodie Instant represents a action done on a hoodie table. All actions start with a inflight instant and then
- * create a completed instant after done.
+ * A Hoodie Instant represents a action done on a hoodie table.
+ * All actions start with a in-flight instant and then create a completed instant after done.
+ *
+ * fixme
+ *    Hoodie实例代表在 hoodie table 上动作执行的完成。
+ *
  *
  * @see HoodieTimeline
  */
 public class HoodieInstant implements Serializable, Comparable<HoodieInstant> {
 
   /**
-   * A COMPACTION action eventually becomes COMMIT when completed. So, when grouping instants
-   * for state transitions, this needs to be taken into account
+   * A COMPACTION action eventually becomes COMMIT when completed.
+   * So, when grouping instants for state transitions, this needs to be taken into account
    */
   private static final Map<String, String> COMPARABLE_ACTIONS =
       CollectionUtils.createImmutableMap(HoodieTimeline.COMPACTION_ACTION, HoodieTimeline.COMMIT_ACTION);
@@ -59,15 +63,17 @@ public class HoodieInstant implements Serializable, Comparable<HoodieInstant> {
 
   /**
    * Instant State.
+   *
+   * 瞬时状态。
    */
   public enum State {
-    // Requested State (valid state for Compaction)
+    // 表示已调度但尚未启动的操作
     REQUESTED,
-    // Inflight instant
+    // 表示当前正在执行该操作。
     INFLIGHT,
-    // Committed instant
+    // 表示在时间轴上完成了该操作
     COMPLETED,
-    // Invalid instant
+    // 无效的状态
     INVALID
   }
 

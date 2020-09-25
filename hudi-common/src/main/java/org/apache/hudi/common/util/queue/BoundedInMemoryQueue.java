@@ -249,6 +249,7 @@ public class BoundedInMemoryQueue<I, O> implements Iterable<O> {
   private final class QueueIterator implements Iterator<O> {
 
     // next record to be read from queue.
+    // 下一个从队列里边获取的元素
     private O nextRecord;
 
     @Override

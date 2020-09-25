@@ -23,10 +23,15 @@ import java.util.Objects;
 
 /**
  * Location of a HoodieRecord within the partition it belongs to. Ultimately, this points to an actual file on disk
+ *
+ * fixme 记录的位置：分区、硬盘位置。
  */
 public class HoodieRecordLocation implements Serializable {
 
+  // 瞬时
   private final String instantTime;
+
+  // 文件id
   private final String fileId;
 
   public HoodieRecordLocation(String instantTime, String fileId) {

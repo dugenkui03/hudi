@@ -30,26 +30,41 @@ import java.util.concurrent.Executors;
 
 /**
  * Clean service running concurrently with write operation.
+ *
+ * fixme 清除操作、和写操作并发执行。
  */
 class AsyncCleanerService extends AbstractAsyncService {
 
+  // 静态日志
   private static final Logger LOG = LogManager.getLogger(AsyncCleanerService.class);
 
+  // 写操作客户端
   private final HoodieWriteClient<?> writeClient;
+
+  // ？清除实例时间？
   private final String cleanInstantTime;
+
+  // (new ThreadPoolExecutor(1, 1, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>()))
   private final transient ExecutorService executor = Executors.newSingleThreadExecutor();
 
-  protected AsyncCleanerService(HoodieWriteClient<?> writeClient, String cleanInstantTime) {
-    this.writeClient = writeClient;
-    this.cleanInstantTime = cleanInstantTime;
+
+  /**
+   * @param writeClient 写客户端
+   * @param cleanInstantTime  清除 瞬时 时间
+   */
+  protected AsyncCleanerService(HoodieWriteClient<?> writeClient,
+                                String cleanInstantTime) {
+      this.writeClient = writeClient;
+      this.cleanInstantTime = cleanInstantTime;
   }
+
 
   @Override
   protected Pair<CompletableFuture, ExecutorService> startService() {
-    return Pair.of(CompletableFuture.supplyAsync(() -> {
-      writeClient.clean(cleanInstantTime);
-      return true;
-    }), executor);
+      return Pair.of(CompletableFuture.supplyAsync(() -> {
+        writeClient.clean(cleanInstantTime);
+        return true;
+      }), executor);
   }
 
   public static AsyncCleanerService startAsyncCleaningIfEnabled(HoodieWriteClient writeClient,

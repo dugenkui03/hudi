@@ -68,26 +68,44 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * Hoodie Write Client helps you build tables on HDFS [insert()] and then perform efficient mutations on an HDFS
- * table [upsert()]
+ * Hoodie Write Client helps you build tables on HDFS [insert()]
+ * and then perform efficient mutations on an HDFS table [upsert()]
+ *
+ * fixme
+ *       Hoodie写客户端 可以用来在 HDFS 之上创建表，然后在表之上执行高效的更新操作。
  * <p>
  * Note that, at any given time, there can only be one Spark job performing these operations on a Hoodie table.
+ *
+ * fixme 在任意时刻，只能有一个spark作业在 hoodie表 上运行。
  */
 public class HoodieWriteClient<T extends HoodieRecordPayload> extends AbstractHoodieWriteClient<T> {
 
   private static final long serialVersionUID = 1L;
+
   private static final Logger LOG = LogManager.getLogger(HoodieWriteClient.class);
+
   private static final String LOOKUP_STR = "lookup";
+
+  // "回滚附加"
   private final boolean rollbackPending;
+
+  // hoodie指标？
   private final transient HoodieMetrics metrics;
+
+  // 时间上下文？
   private transient Timer.Context compactionTimer;
+
+  // 执行清除操作，和写操作是并发执行的
   private transient AsyncCleanerService asyncCleanerService;
 
   /**
    * Create a write client, without cleaning up failed/inflight commits.
    *
    * @param jsc Java Spark Context
+   *            spark上下文
+   *
    * @param clientConfig instance of HoodieWriteConfig
+   *                     写配置实例
    */
   public HoodieWriteClient(JavaSparkContext jsc, HoodieWriteConfig clientConfig) {
     this(jsc, clientConfig, false);
@@ -98,13 +116,20 @@ public class HoodieWriteClient<T extends HoodieRecordPayload> extends AbstractHo
    *
    * @param jsc Java Spark Context
    * @param writeConfig instance of HoodieWriteConfig
+   *
    * @param rollbackPending whether need to cleanup pending commits
+   *                         是否需要清除附加的提交
    */
-  public HoodieWriteClient(JavaSparkContext jsc, HoodieWriteConfig writeConfig, boolean rollbackPending) {
+  public HoodieWriteClient(JavaSparkContext jsc,
+                           HoodieWriteConfig writeConfig,
+                           boolean rollbackPending) {
     this(jsc, writeConfig, rollbackPending, HoodieIndex.createIndex(writeConfig));
   }
 
-  public HoodieWriteClient(JavaSparkContext jsc, HoodieWriteConfig writeConfig, boolean rollbackPending, HoodieIndex index) {
+  public HoodieWriteClient(JavaSparkContext jsc,
+                           HoodieWriteConfig writeConfig,
+                           boolean rollbackPending,
+                           HoodieIndex index) {
     this(jsc, writeConfig, rollbackPending, index, Option.empty());
   }
 
@@ -116,21 +141,34 @@ public class HoodieWriteClient<T extends HoodieRecordPayload> extends AbstractHo
    * @param rollbackPending whether need to cleanup pending commits
    * @param timelineService Timeline Service that runs as part of write client.
    */
-  public HoodieWriteClient(JavaSparkContext jsc, HoodieWriteConfig writeConfig, boolean rollbackPending,
-      HoodieIndex index, Option<EmbeddedTimelineService> timelineService) {
-    super(jsc, index, writeConfig, timelineService);
-    this.metrics = new HoodieMetrics(config, config.getTableName());
-    this.rollbackPending = rollbackPending;
+  public HoodieWriteClient(JavaSparkContext jsc,
+                           HoodieWriteConfig writeConfig,
+                           boolean rollbackPending,
+                           HoodieIndex index,
+                           Option<EmbeddedTimelineService> timelineService) {
+      super(jsc, index, writeConfig, timelineService);
+      this.metrics = new HoodieMetrics(config, config.getTableName());
+      this.rollbackPending = rollbackPending;
   }
 
   /**
    * Register hudi classes for Kryo serialization.
    *
+   * fixme 注册 hudi 类型，用于kryo序列化
+   *
    * @param conf instance of SparkConf
+   *             SparkConf实例
+   *
    * @return SparkConf
-   */
+   *         spark配置类
+   **/
   public static SparkConf registerClasses(SparkConf conf) {
-    conf.registerKryoClasses(new Class[]{HoodieWriteConfig.class, HoodieRecord.class, HoodieKey.class});
+
+    // class数组
+    conf.registerKryoClasses(
+                    new Class[]{HoodieWriteConfig.class, HoodieRecord.class, HoodieKey.class}
+                    );
+    // 注册操作后，返回配置对象
     return conf;
   }
 

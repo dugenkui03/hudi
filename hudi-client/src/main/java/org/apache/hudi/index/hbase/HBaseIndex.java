@@ -70,6 +70,8 @@ import scala.Tuple2;
 
 /**
  * Hoodie Index implementation backed by HBase.
+ *
+ * HBase索引
  */
 public class HBaseIndex<T extends HoodieRecordPayload> extends HoodieIndex<T> {
 

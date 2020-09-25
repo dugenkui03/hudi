@@ -22,20 +22,33 @@ import java.io.Serializable;
 import java.util.Objects;
 import org.apache.hudi.avro.model.HoodieFileStatus;
 
-/**
+/**启动文件映射
  * Value stored in the bootstrap index.
+ *
+ * 存储在(启动)索引中的值。
  */
 public class BootstrapFileMapping implements Serializable, Comparable<BootstrapFileMapping> {
 
+  // 启动基本路径
   private final String bootstrapBasePath;
+
+  // 启动分区路径
   private final String bootstrapPartitionPath;
+
+  // hoodie文件状态
   private final HoodieFileStatus boostrapFileStatus;
 
+  // 分区路径
   private final String partitionPath;
+
+  // 文件id
   private final String fileId;
 
-  public BootstrapFileMapping(String bootstrapBasePath, String bootstrapPartitionPath, String partitionPath,
-                              HoodieFileStatus boostrapFileStatus, String fileId) {
+  public BootstrapFileMapping(String bootstrapBasePath,
+                              String bootstrapPartitionPath,
+                              String partitionPath,
+                              HoodieFileStatus boostrapFileStatus,
+                              String fileId) {
     this.bootstrapBasePath = bootstrapBasePath;
     this.bootstrapPartitionPath = bootstrapPartitionPath;
     this.partitionPath = partitionPath;

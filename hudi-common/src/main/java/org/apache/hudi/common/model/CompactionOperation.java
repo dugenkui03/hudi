@@ -33,26 +33,46 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * Encapsulates all the needed information about a compaction and make a decision whether this compaction is effective
- * or not.
+ * Encapsulates all the needed information about a compaction
+ * and make a decision whether this compaction is effective or not.
+ *
+ * 封装需要压缩的信息，并决定压缩操作是否有效。
  */
 public class CompactionOperation implements Serializable {
 
+  // "基本实例时间"？
   private String baseInstantTime;
+
+  // 时间文件提交时间？
   private Option<String> dataFileCommitTime;
+
+  // delta文件名称
   private List<String> deltaFileNames;
+
+  // 数据文件名称
   private Option<String> dataFileName;
+
+  //hoodie文件id
   private HoodieFileGroupId id;
+
+  // 指标
   private Map<String, Double> metrics;
+
+  // 启动文件路径
   private Option<String> bootstrapFilePath;
 
-  // Only for serialization/de-serialization
+  // Only for serialization/de-serialization 用于序列化和反序列化
   @Deprecated
   public CompactionOperation() {}
 
-  public CompactionOperation(String fileId, String partitionPath, String baseInstantTime,
-                             Option<String> dataFileCommitTime, List<String> deltaFileNames, Option<String> dataFileName,
-                             Option<String> bootstrapFilePath, Map<String, Double> metrics) {
+  public CompactionOperation(String fileId,
+                             String partitionPath,
+                             String baseInstantTime,
+                             Option<String> dataFileCommitTime,
+                             List<String> deltaFileNames,
+                             Option<String> dataFileName,
+                             Option<String> bootstrapFilePath,
+                             Map<String, Double> metrics) {
     this.baseInstantTime = baseInstantTime;
     this.dataFileCommitTime = dataFileCommitTime;
     this.deltaFileNames = deltaFileNames;

@@ -40,10 +40,12 @@ import java.util.Properties;
  */
 public class HoodieWriteCommitHttpCallbackClient implements Closeable {
 
+  // 静态日志类
   private static final Logger LOG = LogManager.getLogger(HoodieWriteCommitHttpCallbackClient.class);
 
   public static final String HEADER_KEY_API_KEY = "HUDI-CALLBACK-KEY";
 
+  // 属性
   private final String apiKey;
   private final String url;
   private final CloseableHttpClient client;
@@ -62,21 +64,28 @@ public class HoodieWriteCommitHttpCallbackClient implements Closeable {
     this.client = client;
   }
 
+  // 回调消息
   public void send(String callbackMsg) {
-    HttpPost request = new HttpPost(url);
-    request.setHeader(HEADER_KEY_API_KEY, apiKey);
-    request.setHeader(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.toString());
-    request.setEntity(new StringEntity(callbackMsg, ContentType.APPLICATION_JSON));
-    try (CloseableHttpResponse response = client.execute(request)) {
-      int statusCode = response.getStatusLine().getStatusCode();
-      if (statusCode >= 300) {
-        LOG.warn(String.format("Failed to send callback message. Response was %s", response));
-      } else {
-        LOG.info(String.format("Sent Callback data %s to %s successfully !", callbackMsg, url));
+      // 设置POST请求体
+      HttpPost request = new HttpPost(url);
+      request.setHeader(HEADER_KEY_API_KEY, apiKey);
+      request.setHeader(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.toString());
+      request.setEntity(new StringEntity(callbackMsg, ContentType.APPLICATION_JSON));
+
+      // 执行post请求
+      try (CloseableHttpResponse response = client.execute(request)) {
+          // 获取请求结果
+          int statusCode = response.getStatusLine().getStatusCode();
+          // todo 如果发送失败、则打印日志
+          // 应该有反馈呀？
+          if (statusCode >= 300) {
+            LOG.warn(String.format("Failed to send callback message. Response was %s", response));
+          } else {
+            LOG.info(String.format("Sent Callback data %s to %s successfully !", callbackMsg, url));
+          }
+      } catch (IOException e) {
+          LOG.warn("Failed to send callback.", e);
       }
-    } catch (IOException e) {
-      LOG.warn("Failed to send callback.", e);
-    }
   }
 
   private String getApiKey() {

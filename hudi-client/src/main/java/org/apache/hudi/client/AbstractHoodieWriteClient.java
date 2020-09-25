@@ -53,15 +53,26 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Abstract Write Client providing functionality for performing commit, index updates and rollback
- *  Reused for regular write operations like upsert/insert/bulk-insert.. as well as bootstrap
+ * Abstract Write Client providing functionality for performing commit, index updates and rollback.
+ *
+ * Reused for regular write operations like upsert/insert/bulk-insert.. as well as bootstrap
+ *
+ * fixme
+ *     提供 执行commit、索引更新和回滚的 抽象写入客户端
+ *
+ * // todo the implementations of HoodieRecordPayload
  * @param <T> Sub type of HoodieRecordPayload
+ *            HoodieRecordPayload 的 实现类
  */
 public abstract class AbstractHoodieWriteClient<T extends HoodieRecordPayload> extends AbstractHoodieClient {
 
+  // 日志
   private static final Logger LOG = LogManager.getLogger(AbstractHoodieWriteClient.class);
 
+  // 指标系统：对于指标相关操作的封装
   private final transient HoodieMetrics metrics;
+
+  //
   private final transient HoodieIndex<T> index;
 
   private transient Timer.Context writeContext = null;
@@ -121,23 +132,29 @@ public abstract class AbstractHoodieWriteClient<T extends HoodieRecordPayload> e
     metadata.setOperationType(operationType);
 
     try {
-      activeTimeline.saveAsComplete(new HoodieInstant(true, actionType, instantTime),
-          Option.of(metadata.toJsonString().getBytes(StandardCharsets.UTF_8)));
+
+      HoodieInstant hoodieInstant = new HoodieInstant(true, actionType, instantTime);
+      Option<byte[]> option = Option.of(metadata.toJsonString().getBytes(StandardCharsets.UTF_8));
+      activeTimeline.saveAsComplete(hoodieInstant, option);
       postCommit(table, metadata, instantTime, extraMetadata);
       emitCommitMetrics(instantTime, metadata, actionType);
       LOG.info("Committed " + instantTime);
     } catch (IOException e) {
-      throw new HoodieCommitException("Failed to complete commit " + config.getBasePath() + " at time " + instantTime,
-          e);
+      String msg = String.format("Failed to complete commit %s at time %s", config.getBasePath(), instantTime);
+      throw new HoodieCommitException(msg, e);
     }
 
-    // callback if needed.
+    // 是否配置了异步客户端。callback if needed.
     if (config.writeCommitCallbackOn()) {
+
+      // 如果回调类为null、则创建
+      // fixme 是否有并发问题
       if (null == commitCallback) {
         commitCallback = HoodieCommitCallbackFactory.create(config);
       }
       commitCallback.call(new HoodieWriteCommitCallbackMessage(instantTime, config.getTableName(), config.getBasePath()));
     }
+
     return true;
   }
 

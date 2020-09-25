@@ -44,6 +44,9 @@ import java.util.concurrent.ConcurrentMap;
  * Hoodie Index implementation backed by an in-memory Hash map.
  * <p>
  * ONLY USE FOR LOCAL TESTING
+ *
+ * fixme
+ *    本地测试用的，在本地内存使用hashmap创建索引。
  */
 public class InMemoryHashIndex<T extends HoodieRecordPayload> extends HoodieIndex<T> {
 

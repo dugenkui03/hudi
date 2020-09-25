@@ -22,6 +22,8 @@ import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.Path;
 
 /**
+ * hoodie存档的日志文件。
+ *
  * The hoodie archived log file.
  */
 public class HoodieArchivedLogFile extends HoodieLogFile {

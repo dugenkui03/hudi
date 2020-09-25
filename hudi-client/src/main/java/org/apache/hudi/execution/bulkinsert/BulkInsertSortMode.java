@@ -19,10 +19,10 @@
 package org.apache.hudi.execution.bulkinsert;
 
 /**
- * Bulk insert sort mode.
+ * Bulk(大量、整体) insert sort mode.
  */
 public enum BulkInsertSortMode {
-    NONE,
-    GLOBAL_SORT,
-    PARTITION_SORT
+    NONE,// none
+    GLOBAL_SORT, // 全局排序
+    PARTITION_SORT // 部分排序
 }

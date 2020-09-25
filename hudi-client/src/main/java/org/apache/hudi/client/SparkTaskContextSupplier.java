@@ -25,13 +25,18 @@ import java.util.function.Supplier;
 
 /**
  * Spark task context supplier.
+ *
+ * 提供spark任务。
  */
 public class SparkTaskContextSupplier implements Serializable {
 
+
+  // 获取分区id
   public Supplier<Integer> getPartitionIdSupplier() {
     return () -> TaskContext.getPartitionId();
   }
 
+  // 获取 阶段id
   public Supplier<Integer> getStageIdSupplier() {
     return () -> TaskContext.get().stageId();
   }

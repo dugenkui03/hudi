@@ -38,19 +38,28 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.IntStream;
 
 /**
- * Async Compactor Service that runs in separate thread. Currently, only one compactor is allowed to run at any time.
+ * Async Compactor Service that runs in separate thread.
+ * Currently, only one compactor is allowed to run at any time.
+ *
+ * 异步压缩服务，在不同的线程运行。当前只有 compactor 可以在任意时间运行
  */
 public class AsyncCompactService extends AbstractAsyncService {
 
   private static final long serialVersionUID = 1L;
+
   private static final Logger LOG = LogManager.getLogger(AsyncCompactService.class);
 
   /**
    * This is the job pool used by async compaction.
+   *
+   * 压缩池 名称：
    */
   public static final String COMPACT_POOL_NAME = "hoodiecompact";
 
+  // 最大并发压缩
   private final int maxConcurrentCompaction;
+
+  //
   private transient Compactor compactor;
   private transient JavaSparkContext jssc;
   private transient BlockingQueue<HoodieInstant> pendingCompactions = new LinkedBlockingQueue<>();

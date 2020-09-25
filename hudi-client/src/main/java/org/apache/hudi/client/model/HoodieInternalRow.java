@@ -28,21 +28,32 @@ import org.apache.spark.unsafe.types.CalendarInterval;
 import org.apache.spark.unsafe.types.UTF8String;
 
 /**
- * Internal Row implementation for Hoodie Row. It wraps an {@link InternalRow} and keeps meta columns locally. But the {@link InternalRow}
- * does include the meta columns as well just that {@link HoodieInternalRow} will intercept queries for meta columns and serve from its
- * copy rather than fetching from {@link InternalRow}.
+ * Internal Row implementation for Hoodie Row. It wraps an {@link InternalRow} and keeps meta columns locally.
+ * But the {@link InternalRow} does include the meta columns as well just that
+ * {@link HoodieInternalRow} will intercept queries for meta columns
+ * and serve from its copy rather than fetching from {@link InternalRow}.
  */
 public class HoodieInternalRow extends InternalRow {
 
+  // 提交时间
   private String commitTime;
+
+  // 提交序列号
   private String commitSeqNumber;
+
+  // 记录key
   private String recordKey;
+
+  // 分区路径
   private String partitionPath;
+
+  // 文件名称
   private String fileName;
+
+  // fixme 继承+组合（spark-unsafe)
   private InternalRow row;
 
-  public HoodieInternalRow(String commitTime, String commitSeqNumber, String recordKey, String partitionPath,
-      String fileName, InternalRow row) {
+  public HoodieInternalRow(String commitTime, String commitSeqNumber, String recordKey, String partitionPath, String fileName, InternalRow row) {
     this.commitTime = commitTime;
     this.commitSeqNumber = commitSeqNumber;
     this.recordKey = recordKey;
@@ -80,6 +91,7 @@ public class HoodieInternalRow extends InternalRow {
           this.fileName = null;
           break;
         }
+        // todo 加上参数
         default: throw new IllegalArgumentException("Not expected");
       }
     } else {

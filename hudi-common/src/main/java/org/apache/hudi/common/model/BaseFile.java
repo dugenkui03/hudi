@@ -27,12 +27,21 @@ import java.util.Objects;
 /**
  * Represents common metadata about base-file.
  * A base file can be Hudi base file or even an external (non-hudi) base file too.
+ *
+ * fixme 基本文件的元数据。
+ *
  */
 public class BaseFile implements Serializable {
 
   private static final long serialVersionUID = 1L;
+
+  // 文件状态
   private transient FileStatus fileStatus;
+
+  // 全路径
   private final String fullPath;
+
+  // 文件长度
   private long fileLen;
 
   public BaseFile(BaseFile dataFile) {
@@ -86,6 +95,8 @@ public class BaseFile implements Serializable {
       return false;
     }
     BaseFile dataFile = (BaseFile) o;
+
+    // todo 最后比较的是引用，两个字符串的引用是否可能不不同？不会的，详情见equals方法
     return Objects.equals(fullPath, dataFile.fullPath);
   }
 

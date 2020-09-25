@@ -24,7 +24,10 @@ import java.io.Serializable;
 
 public class CleanFileInfo implements Serializable {
 
+  // 文件路径
   private final String filePath;
+
+  // 是否是启动 base文件
   private final boolean isBootstrapBaseFile;
 
   public CleanFileInfo(String filePath, boolean isBootstrapBaseFile) {

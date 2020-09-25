@@ -26,23 +26,32 @@ import java.util.TreeSet;
 import java.util.stream.Stream;
 
 /**
- * Within a file group, a slice is a combination of data file written at a commit time and list of log files, containing
- * changes to the data file from that commit time.
+ * Within a file group, a slice is a combination of data file written at a commit time
+ * and list of log files, containing changes to the data file from that commit time.
+ *
+ * "在文件组中，切片是在提交时写入的数据文件和日志文件列表的组合，包含从该提交时间起对数据文件的更改。"
+ *
  */
 public class FileSlice implements Serializable {
 
   /**
    * File Group Id of the Slice.
+   *
+   * 文件切片的文件组id。
    */
   private HoodieFileGroupId fileGroupId;
 
   /**
    * Point in the timeline, at which the slice was created.
+   *
+   * 创建文件片的时间点。
    */
   private String baseInstantTime;
 
   /**
    * data file, with the compacted data, for this slice.
+   *
+   * 包含该文件片压缩数据的数据文件。
    */
   private HoodieBaseFile baseFile;
 

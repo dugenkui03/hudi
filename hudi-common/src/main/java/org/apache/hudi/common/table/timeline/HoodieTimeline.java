@@ -30,11 +30,14 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 /**
- * HoodieTimeline is a view of meta-data instants in the hoodie table. Instants are specific points in time
- * represented as HoodieInstant.
+ * HoodieTimeline is a view of meta-data instants in the hoodie table.
+ * Instants are specific points in time represented as HoodieInstant.
  * <p>
- * Timelines are immutable once created and operations create new instance of timelines which filter on the instants and
- * this can be chained.
+ * Timelines are immutable once created and operations create new instance of timelines
+ * which filter on the instants and this can be chained.
+ *
+ * fixme
+ *      HoodieTimeline 是 hoodie表中元数据的一个视图。
  *
  * @see HoodieTableMetaClient
  * @see HoodieDefaultTimeline
@@ -43,14 +46,29 @@ import java.util.stream.Stream;
  */
 public interface HoodieTimeline extends Serializable {
 
+  // 一次提交表示将一组记录原子写入到数据集中
   String COMMIT_ACTION = "commit";
+
+  // 增量提交是指将一批记录原子写入到MergeOnRead存储类型的数据集中，其中一些/所有数据都可以只写到增量日志中
   String DELTA_COMMIT_ACTION = "deltacommit";
+
+  // 删除数据集中不再需要的旧文件版本的后台活动
   String CLEAN_ACTION = "clean";
+
+  // 表示提交/增量提交不成功且已回滚，删除在写入过程中产生的所有部分文件
   String ROLLBACK_ACTION = "rollback";
+
+  // 将某些文件组标记为"已保存"，以便清理程序不会将其删除。
+  // 在发生灾难/数据恢复的情况下，它有助于将数据集还原到时间轴上的某个点。
   String SAVEPOINT_ACTION = "savepoint";
+
+  //  表示当前正在执行该操作
   String INFLIGHT_EXTENSION = ".inflight";
+
   // With Async Compaction, compaction instant can be in 3 states :
   // (compaction-requested), (compaction-inflight), (completed)
+  //  协调Hudi中差异数据结构的后台活动，包含三种状态：被要求，进行中，完成。
+  //  示例：将更新从基于行的日志文件变成列格式。在内部，压缩表现为时间轴上的特殊提交。
   String COMPACTION_ACTION = "compaction";
   String REQUESTED_EXTENSION = ".requested";
   String RESTORE_ACTION = "restore";

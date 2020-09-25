@@ -45,8 +45,8 @@ import java.util.List;
 import static org.apache.hudi.index.HoodieIndexUtils.getLatestBaseFilesForAllPartitions;
 
 /**
- * A global simple index which reads interested fields(record key and partition path) from base files and
- * joins with incoming records to find the tagged location.
+ * A global simple index which reads interested fields(record key and partition path)
+ * from base files and joins with incoming records to find the tagged location.
  *
  * @param <T>
  */

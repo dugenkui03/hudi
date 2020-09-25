@@ -25,6 +25,8 @@ import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.generic.IndexedRecord;
 
 /**
+ * 空数据，用于删除操作。
+ *
  * Empty payload used for deletions.
  */
 public class EmptyHoodieRecordPayload implements HoodieRecordPayload<EmptyHoodieRecordPayload> {

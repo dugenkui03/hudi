@@ -49,14 +49,21 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Stream;
 
 /**
- * This class provides a disk spillable only map implementation. All of the data is currenly written to one file,
- * without any rollover support. It uses the following : 1) An in-memory map that tracks the key-> latest ValueMetadata.
- * 2) Current position in the file NOTE : Only String.class type supported for Key
+ * This class provides a disk spillable only map implementation.
+ * // todo 当前所有的数据都写在文件中
+ * All of the data is currently written to one file, without any rollover support.
+ * It uses the following :
+ *      1) An in-memory map that tracks the key -> latest ValueMetadata.
+ *      2) Current position in the file NOTE : Only String.class type supported for Key。
  */
 public final class DiskBasedMap<T extends Serializable, R extends Serializable> implements Map<T, R>, Iterable<R> {
 
-  public static final int BUFFER_SIZE = 128 * 1024;  // 128 KB
+  // 日志类
   private static final Logger LOG = LogManager.getLogger(DiskBasedMap.class);
+
+  // 缓存大小 128 KB
+  public static final int BUFFER_SIZE = 128 * 1024;
+
   // Stores the key and corresponding value's latest metadata spilled to disk
   private final Map<T, ValueMetadata> valueMetadataMap;
   // Write only file

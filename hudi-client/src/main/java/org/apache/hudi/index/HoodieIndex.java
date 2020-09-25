@@ -47,26 +47,44 @@ import java.io.Serializable;
 
 /**
  * Base class for different types of indexes to determine the mapping from uuid.
+ *
+ * fixme 索引类，唯一属性：写配置HoodieWriteConfig
  */
 @PublicAPIClass(maturity = ApiMaturityLevel.EVOLVING)
 public abstract class HoodieIndex<T extends HoodieRecordPayload> implements Serializable {
 
+  // 写配置
   protected final HoodieWriteConfig config;
 
+  // 用写配置构造索引对象
   protected HoodieIndex(HoodieWriteConfig config) {
     this.config = config;
   }
 
-  public static <T extends HoodieRecordPayload> HoodieIndex<T> createIndex(
-      HoodieWriteConfig config) throws HoodieIndexException {
+  /**
+   * fixme 使用写配置构建索引对象的实现类
+   * @param config
+   * @param <T>
+   * @return
+   * @throws HoodieIndexException
+   */
+  public static <T extends HoodieRecordPayload> HoodieIndex<T> createIndex(HoodieWriteConfig config) throws HoodieIndexException {
+
     // first use index class config to create index.
+    // 如果配置的索引类不为空
     if (!StringUtils.isNullOrEmpty(config.getIndexClass())) {
-      Object instance = ReflectionUtils.loadClass(config.getIndexClass(), config);
-      if (!(instance instanceof HoodieIndex)) {
-        throw new HoodieIndexException(config.getIndexClass() + " is not a subclass of HoodieIndex");
-      }
-      return (HoodieIndex) instance;
+        // 创建索引对象
+        Object instance = ReflectionUtils.loadClass(config.getIndexClass(), config);
+
+        // 如果不是索引对象、则抛异常
+        if (!(instance instanceof HoodieIndex)) {
+          throw new HoodieIndexException(config.getIndexClass() + " is not a subclass of HoodieIndex");
+        }
+        return (HoodieIndex) instance;
     }
+
+    // 如果配置中指定的自定义的索引类为空
+    // 则根据索引类的类型，创建已有的索引类
     switch (config.getIndexType()) {
       case HBASE:
         return new HBaseIndex<>(config);
@@ -144,11 +162,19 @@ public abstract class HoodieIndex<T extends HoodieRecordPayload> implements Seri
 
   /**
    * Each index type should implement it's own logic to release any resources acquired during the process.
+   *
+   * 删除索引？
    */
   public void close() {
   }
 
+  // 索引类型
   public enum IndexType {
-    HBASE, INMEMORY, BLOOM, GLOBAL_BLOOM, SIMPLE, GLOBAL_SIMPLE
+      HBASE,
+      INMEMORY,
+      BLOOM,
+      GLOBAL_BLOOM,
+      SIMPLE,
+      GLOBAL_SIMPLE
   }
 }

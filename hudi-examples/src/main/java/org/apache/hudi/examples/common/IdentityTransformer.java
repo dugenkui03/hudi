@@ -31,7 +31,9 @@ import org.apache.spark.sql.SparkSession;
 public class IdentityTransformer implements Transformer {
 
   @Override
-  public Dataset<Row> apply(JavaSparkContext jsc, SparkSession sparkSession, Dataset<Row> rowDataset,
+  public Dataset<Row> apply(JavaSparkContext jsc,
+                            SparkSession sparkSession,
+                            Dataset<Row> rowDataset,
                             TypedProperties properties) {
     return rowDataset;
   }

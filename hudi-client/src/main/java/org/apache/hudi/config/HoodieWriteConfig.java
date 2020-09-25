@@ -52,14 +52,20 @@ import java.util.stream.Collectors;
 
 /**
  * Class storing configs for the {@link HoodieWriteClient}.
+ *
+ * 存储 HoodieWriteClient 配置的类。
  */
 @Immutable
 public class HoodieWriteConfig extends DefaultHoodieConfig {
 
   private static final long serialVersionUID = 0L;
 
+  // 表名
   public static final String TABLE_NAME = "hoodie.table.name";
+
+  // 回滚默认使用 marker = false
   public static final String DEFAULT_ROLLBACK_USING_MARKERS = "false";
+
   public static final String ROLLBACK_USING_MARKERS = "hoodie.rollback.using.markers";
   public static final String TIMELINE_LAYOUT_VERSION = "hoodie.timeline.layout.version";
   public static final String BASE_PATH_PROP = "hoodie.base.path";
@@ -95,7 +101,7 @@ public class HoodieWriteConfig extends DefaultHoodieConfig {
   public static final String MARKERS_DELETE_PARALLELISM = "hoodie.markers.delete.parallelism";
   public static final String DEFAULT_MARKERS_DELETE_PARALLELISM = "100";
   public static final String BULKINSERT_SORT_MODE = "hoodie.bulkinsert.sort.mode";
-  public static final String DEFAULT_BULKINSERT_SORT_MODE = BulkInsertSortMode.GLOBAL_SORT
+  public static final String DEFAULT_BULKINSERT_SORT_MODE = BulkInsertSortMode.GLOBAL_SORT // 全局排序、部分排序、none
       .toString();
 
   public static final String EMBEDDED_TIMELINE_SERVER_ENABLED = "hoodie.embed.timeline.server";
@@ -384,6 +390,7 @@ public class HoodieWriteConfig extends DefaultHoodieConfig {
   }
 
   public String getIndexClass() {
+    // hoodie.index.class hodie索引类
     return props.getProperty(HoodieIndexConfig.INDEX_CLASS_PROP);
   }
 
@@ -1040,6 +1047,7 @@ public class HoodieWriteConfig extends DefaultHoodieConfig {
     private void validate() {
       String layoutVersion = props.getProperty(TIMELINE_LAYOUT_VERSION);
       // Ensure Layout Version is good
+      // 保证 布局版本 是好的
       new TimelineLayoutVersion(Integer.parseInt(layoutVersion));
       Objects.requireNonNull(props.getProperty(BASE_PATH_PROP));
     }

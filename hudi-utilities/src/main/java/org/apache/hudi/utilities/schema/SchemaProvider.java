@@ -38,17 +38,22 @@ public abstract class SchemaProvider implements Serializable {
 
   protected JavaSparkContext jssc;
 
+  // 构造参数
   protected SchemaProvider(TypedProperties props, JavaSparkContext jssc) {
     this.config = props;
     this.jssc = jssc;
   }
 
   @PublicAPIMethod(maturity = ApiMaturityLevel.STABLE)
-  public abstract Schema getSourceSchema();
-
-  @PublicAPIMethod(maturity = ApiMaturityLevel.STABLE)
   public Schema getTargetSchema() {
     // by default, use source schema as target for hoodie table as well
     return getSourceSchema();
   }
+
+  /**
+   * @return 获取 schema
+   */
+  @PublicAPIMethod(maturity = ApiMaturityLevel.STABLE)
+  public abstract Schema getSourceSchema();
+
 }

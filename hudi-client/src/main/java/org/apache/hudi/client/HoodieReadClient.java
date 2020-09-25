@@ -53,16 +53,22 @@ import scala.Tuple2;
 
 /**
  * Provides an RDD based API for accessing/filtering Hoodie tables, based on keys.
+ *
+ * 基于 key，提供基于RDD的api、用来获取和过滤 hoodie表。
  */
 public class HoodieReadClient<T extends HoodieRecordPayload> implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
   /**
-   * TODO: We need to persist the index type into hoodie.properties and be able to access the index just with a simple
+   * TODO: We need to persist the index type into hoodie.properties
+   *       and be able to access the index just with a simple.
+   *
    * basepath pointing to the table. Until, then just always assume a BloomIndex
    */
   private final transient HoodieIndex<T> index;
+
+  // hoodie表
   private HoodieTable hoodieTable;
   private transient Option<SQLContext> sqlContextOpt;
   private final transient JavaSparkContext jsc;

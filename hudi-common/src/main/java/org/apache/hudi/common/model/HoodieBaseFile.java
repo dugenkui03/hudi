@@ -29,6 +29,7 @@ import org.apache.hadoop.fs.FileStatus;
  */
 public class HoodieBaseFile extends BaseFile {
 
+  // Option，类似Optional
   private Option<BaseFile> bootstrapBaseFile;
 
   public HoodieBaseFile(HoodieBaseFile dataFile) {

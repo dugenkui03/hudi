@@ -31,6 +31,8 @@ import org.apache.hudi.common.util.collection.Pair;
 
 /**
  * A Single Record managed by Hoodie.
+ *
+ * hoodie 控制的 单个记录
  */
 public class HoodieRecord<T extends HoodieRecordPayload> implements Serializable {
 
@@ -40,13 +42,18 @@ public class HoodieRecord<T extends HoodieRecordPayload> implements Serializable
   public static final String PARTITION_PATH_METADATA_FIELD = "_hoodie_partition_path";
   public static final String FILENAME_METADATA_FIELD = "_hoodie_file_name";
 
-  public static final List<String> HOODIE_META_COLUMNS =
-      CollectionUtils.createImmutableList(COMMIT_TIME_METADATA_FIELD, COMMIT_SEQNO_METADATA_FIELD,
-          RECORD_KEY_METADATA_FIELD, PARTITION_PATH_METADATA_FIELD, FILENAME_METADATA_FIELD);
+  public static final List<String> HOODIE_META_COLUMNS= CollectionUtils.createImmutableList(COMMIT_TIME_METADATA_FIELD,
+                                                                                            COMMIT_SEQNO_METADATA_FIELD,
+                                                                                            RECORD_KEY_METADATA_FIELD,
+                                                                                            PARTITION_PATH_METADATA_FIELD,
+                                                                                            FILENAME_METADATA_FIELD);
 
+  // 就是上边的加了个升序的数字
   public static final Map<String, Integer> HOODIE_META_COLUMNS_NAME_TO_POS =
-      IntStream.range(0, HOODIE_META_COLUMNS.size()).mapToObj(idx -> Pair.of(HOODIE_META_COLUMNS.get(idx), idx))
-          .collect(Collectors.toMap(Pair::getKey, Pair::getValue));
+                                                                            IntStream.range(0, HOODIE_META_COLUMNS.size())
+                                                                            .mapToObj(idx -> Pair.of(HOODIE_META_COLUMNS.get(idx), idx))
+                                                                            .collect(Collectors.toMap(Pair::getKey, Pair::getValue));
+
 
   /**
    * Identifies the record across the table.
@@ -55,6 +62,8 @@ public class HoodieRecord<T extends HoodieRecordPayload> implements Serializable
 
   /**
    * Actual payload of the record.
+   *
+   * 真正的数据。
    */
   private T data;
 
@@ -65,20 +74,24 @@ public class HoodieRecord<T extends HoodieRecordPayload> implements Serializable
 
   /**
    * New location of record on storage, after written.
+   *
+   * 写入之后，新的位置。
    */
   private HoodieRecordLocation newLocation;
 
   /**
    * Indicates whether the object is sealed.
+   *
+   * 对象是否是密封的。
    */
   private boolean sealed;
 
   public HoodieRecord(HoodieKey key, T data) {
-    this.key = key;
-    this.data = data;
-    this.currentLocation = null;
-    this.newLocation = null;
-    this.sealed = false;
+      this.key = key;
+      this.data = data;
+      this.currentLocation = null;
+      this.newLocation = null;
+      this.sealed = false;
   }
 
   public HoodieRecord(HoodieRecord<T> record) {

@@ -51,10 +51,15 @@ import org.apache.parquet.schema.MessageType;
 
 /**
  * Helper class to read schema from data files and log files and to convert it between different formats.
+ *
+ * 1. 从数据文件和日志文件中读取schema；
+ * 2. 将数据转换成不同的形式。
  */
 public class TableSchemaResolver {
 
   private static final Logger LOG = LogManager.getLogger(TableSchemaResolver.class);
+
+  // fixme 表元数据客户端，唯一属性
   private HoodieTableMetaClient metaClient;
 
   public TableSchemaResolver(HoodieTableMetaClient metaClient) {

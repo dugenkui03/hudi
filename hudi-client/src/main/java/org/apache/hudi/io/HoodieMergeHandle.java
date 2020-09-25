@@ -53,13 +53,22 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ *  hoodie 合并处理器
+ */
 @SuppressWarnings("Duplicates")
 public class HoodieMergeHandle<T extends HoodieRecordPayload> extends HoodieWriteHandle<T> {
 
+  // 静态日志
   private static final Logger LOG = LogManager.getLogger(HoodieMergeHandle.class);
 
+  // <key,新纪录>
   protected Map<String, HoodieRecord<T>> keyToNewRecords;
+
+  // 写记录
   protected Set<String> writtenRecordKeys;
+
+  // 文件writer：索引记录
   private HoodieFileWriter<IndexedRecord> fileWriter;
 
   private Path newFilePath;
@@ -80,10 +89,17 @@ public class HoodieMergeHandle<T extends HoodieRecordPayload> extends HoodieWrit
 
   /**
    * Called by compactor code path.
+   *
+   * 被 压缩代码路径 调用。
    */
-  public HoodieMergeHandle(HoodieWriteConfig config, String instantTime, HoodieTable<T> hoodieTable,
-      Map<String, HoodieRecord<T>> keyToNewRecords, String partitionPath, String fileId,
-      HoodieBaseFile dataFileToBeMerged, SparkTaskContextSupplier sparkTaskContextSupplier) {
+  public HoodieMergeHandle(HoodieWriteConfig config,
+                           String instantTime,
+                           HoodieTable<T> hoodieTable,
+                           Map<String, HoodieRecord<T>> keyToNewRecords,
+                           String partitionPath,
+                           String fileId,
+                           HoodieBaseFile dataFileToBeMerged,
+                           SparkTaskContextSupplier sparkTaskContextSupplier) {
     super(config, instantTime, partitionPath, fileId, hoodieTable, sparkTaskContextSupplier);
     this.keyToNewRecords = keyToNewRecords;
     this.useWriterSchema = true;
