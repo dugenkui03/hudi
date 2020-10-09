@@ -74,6 +74,7 @@ public enum WriteOperationType {
       case "delete":
         return DELETE;
       default:
+        // todo 用不用把参数写到返回值里边
         throw new HoodieException("Invalid value of Type.");
     }
   }
