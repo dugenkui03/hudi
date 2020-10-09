@@ -27,6 +27,8 @@ package org.apache.hudi.common.model;
  * <p>
  * MERGE_ON_READ - Speeds up upserts, by delaying merge until enough work piles up.
  * <p>
+ *
+ * hoodie表类型。
  */
 public enum HoodieTableType {
   COPY_ON_WRITE, MERGE_ON_READ
