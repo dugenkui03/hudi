@@ -22,6 +22,8 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Lightweight Counter for Hudi Metrics.
+ *
+ * hudi指标的轻量级计数器。
  */
 public class Counter implements Metric {
 

@@ -20,6 +20,8 @@ package org.apache.hudi.common.metrics;
 
 /**
  * Interface for Hudi Metric Types.
+ *
+ * hudi指标类型接口
  */
 public interface Metric {
   Long getValue();
