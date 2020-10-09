@@ -20,6 +20,8 @@ package org.apache.hudi.common.model;
 
 /**
  * Hoodie file format.
+ *
+ * 日志格式 parquet、log、hfile
  */
 public enum HoodieFileFormat {
   PARQUET(".parquet"),

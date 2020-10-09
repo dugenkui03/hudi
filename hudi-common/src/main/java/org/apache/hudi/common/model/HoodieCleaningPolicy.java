@@ -20,6 +20,8 @@ package org.apache.hudi.common.model;
 
 /**
  * Hoodie cleaning policies.
+ *
+ * 清除策略：保持最后一个文件版本；保持最新的提交
  */
 public enum HoodieCleaningPolicy {
   KEEP_LATEST_FILE_VERSIONS, KEEP_LATEST_COMMITS

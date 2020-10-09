@@ -32,26 +32,33 @@ import java.util.Properties;
 
 /**
  * The metadata that goes into the meta file in each partition.
+ *
+ * 每个分区元文件中的元数据。
  */
 public class HoodiePartitionMetadata {
 
+  private static final Logger LOG = LogManager.getLogger(HoodiePartitionMetadata.class);
+
+  // 分区元数据、分区深度、提交时间
   public static final String HOODIE_PARTITION_METAFILE = ".hoodie_partition_metadata";
   public static final String PARTITION_DEPTH_KEY = "partitionDepth";
   public static final String COMMIT_TIME_KEY = "commitTime";
 
   /**
    * Contents of the metadata.
+   *
+   * 元数据内容。
    */
   private final Properties props;
 
   /**
    * Path to the partition, about which we have the metadata.
+   *
+   * 分区路径。
    */
   private final Path partitionPath;
 
   private final FileSystem fs;
-
-  private static final Logger LOG = LogManager.getLogger(HoodiePartitionMetadata.class);
 
   /**
    * Construct metadata from existing partition.

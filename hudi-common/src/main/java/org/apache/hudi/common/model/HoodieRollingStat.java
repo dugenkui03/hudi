@@ -26,14 +26,20 @@ import java.io.Serializable;
 
 /**
  * A model class defines hoodie rolling stat.
+ *
+ * ？？定义 hoodie 回滚状态的类？？
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class HoodieRollingStat implements Serializable {
 
+  // 文件id
   private String fileId;
+
+  // 插入、更新插入和删除
   private long inserts;
   private long upserts;
   private long deletes;
+
   // TODO
   @Nullable
   private long totalInputWriteBytesToDisk;

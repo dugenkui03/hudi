@@ -30,10 +30,12 @@ import java.util.Comparator;
 import java.util.Objects;
 
 /**
- * Abstracts a single log file. Contains methods to extract metadata like the fileId, version and extension from the log
- * file path.
+ * Abstracts a single log file.
+ * Contains methods to extract metadata like the fileId,
+ * version and extension from the log file path.
+ *
  * <p>
- * Also contains logic to roll-over the log file
+ * Also contains logic to roll-over the log file.
  */
 public class HoodieLogFile implements Serializable {
 
@@ -41,6 +43,7 @@ public class HoodieLogFile implements Serializable {
   public static final String DELTA_EXTENSION = ".log";
   public static final Integer LOGFILE_BASE_VERSION = 1;
 
+  // 文件状态、路径字符串和文件长度
   private transient FileStatus fileStatus;
   private final String pathStr;
   private long fileLen;

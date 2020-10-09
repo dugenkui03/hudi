@@ -33,6 +33,8 @@ import java.util.stream.Stream;
 
 /**
  * A set of data/base files + set of log files, that make up an unit for all operations.
+ *
+ * 文件集合 + 日志文件集合，组成了所有操作的单元。
  */
 public class HoodieFileGroup implements Serializable {
 
@@ -42,11 +44,15 @@ public class HoodieFileGroup implements Serializable {
 
   /**
    * file group id.
+   *
+   * 组id。
    */
   private final HoodieFileGroupId fileGroupId;
 
   /**
    * Slices of files in this group, sorted with greater commit first.
+   *
+   * 组中的文件片？
    */
   private final TreeMap<String, FileSlice> fileSlices;
 

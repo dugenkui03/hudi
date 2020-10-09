@@ -35,10 +35,14 @@ import java.util.Map;
 
 /**
  * All the metadata that gets stored along with a commit.
+ *
+ * 与提交一起存储的元数据。
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class HoodieReplaceCommitMetadata extends HoodieCommitMetadata {
   private static final Logger LOG = LogManager.getLogger(HoodieReplaceCommitMetadata.class);
+
+  // <分区,替换的文件id>
   protected Map<String, List<String>> partitionToReplaceFileIds;
 
   // for ser/deser

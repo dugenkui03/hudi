@@ -27,11 +27,19 @@ import org.apache.hudi.avro.model.HoodieFileStatus;
  */
 public class BootstrapFileMapping implements Serializable, Comparable<BootstrapFileMapping> {
 
+  // 启动基本路径
   private final String bootstrapBasePath;
+
+  // 启动分区路径
   private final String bootstrapPartitionPath;
+
+  // hoodie文件状态
   private final HoodieFileStatus bootstrapFileStatus;
 
+  // 分区路径
   private final String partitionPath;
+
+  // 文件id
   private final String fileId;
 
   public BootstrapFileMapping(String bootstrapBasePath, String bootstrapPartitionPath, String partitionPath,
