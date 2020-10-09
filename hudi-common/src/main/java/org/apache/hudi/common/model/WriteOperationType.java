@@ -43,7 +43,8 @@ public enum WriteOperationType {
   // 删除
   DELETE("delete"),
   BOOTSTRAP("bootstrap"),
-
+  // insert overwrite
+  INSERT_OVERWRITE("insert_overwrite"),
   // used for old version
   // 老版本使用的枚举
   UNKNOWN("unknown");
@@ -73,6 +74,8 @@ public enum WriteOperationType {
         return BULK_INSERT_PREPPED;
       case "delete":
         return DELETE;
+      case "insert_overwrite":
+        return INSERT_OVERWRITE;
       default:
         // todo 用不用把参数写到返回值里边
         throw new HoodieException("Invalid value of Type.");
