@@ -20,6 +20,8 @@ package org.apache.hudi.exception;
 
 /**
  * An exception throws when meet not supported operation.
+ *
+ * 不支持的操作。
  */
 public class HoodieNotSupportedException extends HoodieException {
 

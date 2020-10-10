@@ -20,6 +20,8 @@ package org.apache.hudi.exception;
 
 /**
  * Exception thrown when any data corruption happens when reading/writing from temporary disk.
+ *
+ * 当从 "临时硬盘" 读写数据时，如果碰到坏数据，则抛该异常。
  */
 public class HoodieCorruptedDataException extends HoodieException {
 

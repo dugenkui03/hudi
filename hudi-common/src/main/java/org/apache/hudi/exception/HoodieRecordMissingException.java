@@ -22,9 +22,10 @@ import org.apache.hudi.common.model.HoodieRecord;
 
 /**
  * <p>
- * Exception throws when indexing fails to locate the hoodie record. HoodieRecord current location and partition path
- * does not match. This is an unrecoverable error
- * </p>
+ * Exception throws when indexing fails to locate the hoodie record.
+ * HoodieRecord current location and partition path does not match. This is an unrecoverable error
+ *
+ * 找不到记录。
  */
 public class HoodieRecordMissingException extends HoodieException {
 

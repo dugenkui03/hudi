@@ -29,6 +29,7 @@ import org.apache.hudi.common.util.Option;
 
 public interface HoodieFileReader<R extends IndexedRecord> {
 
+
   public String[] readMinMaxRecordKeys();
 
   public BloomFilter readBloomFilter();

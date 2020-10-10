@@ -26,17 +26,23 @@ public enum ApiMaturityLevel {
      * New APIs start out in this state. Although enough thought will be given to avoid
      * breaking changes to the API in the future, sometimes it might need to change
      * based on feedback.
+     *
+     * 在不断发展。
      */
     EVOLVING,
     /**
      * Enough applications/users have picked up the API and we deem it stable. We will strive to never
      * break the stability of such APIs within a given major version release.
+     *
+     * 稳定的。
      */
     STABLE,
     /**
      * New things are born, old things fade away. This holds true for APIs also. Once an API has been
      * marked as deprecated, new APIs replacing them (if need be) would be in stable state for users
      * to migrate to.
+     *
+     * 要弃用的。
      */
     DEPRECATED
 }

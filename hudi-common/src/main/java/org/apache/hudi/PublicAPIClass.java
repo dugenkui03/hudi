@@ -27,9 +27,12 @@ import java.lang.annotation.Target;
 
 /**
  * Annotates a type as a user facing class.
+ *
+ * 对用户使用的类进行注解。
  */
 @Inherited
 @Documented
+// fixme 注解在类上
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.CLASS)
 public @interface PublicAPIClass {

@@ -42,33 +42,61 @@ import java.util.Properties;
 import java.util.stream.Collectors;
 
 /**
- * Configurations on the Hoodie Table like type of ingestion, storage formats, hive table name etc Configurations are loaded from hoodie.properties, these properties are usually set during
+ * Configurations on the Hoodie Table like type of ingestion, storage formats, hive table name etc
+ * Configurations are loaded from hoodie.properties, these properties are usually set during
  * initializing a path as hoodie base path and never changes during the lifetime of a hoodie table.
+ *
+ * hoodie表配置：提起鳄梨行、存储格式、hive表名。
  *
  * @see HoodieTableMetaClient
  * @since 0.3.0
  */
 public class HoodieTableConfig implements Serializable {
 
+  // 日志
   private static final Logger LOG = LogManager.getLogger(HoodieTableConfig.class);
 
   public static final String HOODIE_PROPERTIES_FILE = "hoodie.properties";
+
+  // 表名
   public static final String HOODIE_TABLE_NAME_PROP_NAME = "hoodie.table.name";
+
+  // 表类型
   public static final String HOODIE_TABLE_TYPE_PROP_NAME = "hoodie.table.type";
+
+  // 表版本
   public static final String HOODIE_TABLE_VERSION_PROP_NAME = "hoodie.table.version";
+
   @Deprecated
   public static final String HOODIE_RO_FILE_FORMAT_PROP_NAME = "hoodie.table.ro.file.format";
   @Deprecated
   public static final String HOODIE_RT_FILE_FORMAT_PROP_NAME = "hoodie.table.rt.file.format";
+
+  // 表基本文件 格式
   public static final String HOODIE_BASE_FILE_FORMAT_PROP_NAME = "hoodie.table.base.file.format";
+
+  // 表日志文件格式
   public static final String HOODIE_LOG_FILE_FORMAT_PROP_NAME = "hoodie.table.log.file.format";
+
+  // 时间轴布局版本
   public static final String HOODIE_TIMELINE_LAYOUT_VERSION = "hoodie.timeline.layout.version";
+
+  // 压缩负荷类
   public static final String HOODIE_PAYLOAD_CLASS_PROP_NAME = "hoodie.compaction.payload.class";
+
+  //归档日志文件夹
   public static final String HOODIE_ARCHIVELOG_FOLDER_PROP_NAME = "hoodie.archivelog.folder";
+
+  // 启动索引类
   public static final String HOODIE_BOOTSTRAP_INDEX_CLASS_PROP_NAME = "hoodie.bootstrap.index.class";
+
+  // 启动基本路径
   public static final String HOODIE_BOOTSTRAP_BASE_PATH = "hoodie.bootstrap.base.path";
 
+  // 默认表类型：写时复制
   public static final HoodieTableType DEFAULT_TABLE_TYPE = HoodieTableType.COPY_ON_WRITE;
+
+  //
   public static final HoodieTableVersion DEFAULT_TABLE_VERSION = HoodieTableVersion.ZERO;
   public static final HoodieFileFormat DEFAULT_BASE_FILE_FORMAT = HoodieFileFormat.PARQUET;
   public static final HoodieFileFormat DEFAULT_LOG_FILE_FORMAT = HoodieFileFormat.HOODIE_LOG;

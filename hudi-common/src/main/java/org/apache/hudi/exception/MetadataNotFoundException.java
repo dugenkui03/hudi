@@ -20,6 +20,8 @@ package org.apache.hudi.exception;
 
 /**
  * Thrown when expected metadata is not found.
+ *
+ * 找不到元数据。
  */
 public class MetadataNotFoundException extends HoodieException {
 

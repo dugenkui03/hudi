@@ -21,7 +21,8 @@ package org.apache.hudi.exception;
 /**
  * <p>
  * Exception thrown for Hoodie Key Generator related errors.
- * </p>
+ *
+ * hoodie key相关异常。
  */
 public class HoodieKeyException extends HoodieException {
 

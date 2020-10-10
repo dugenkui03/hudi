@@ -23,7 +23,8 @@ import java.io.IOException;
 /**
  * <p>
  * Exception thrown for table IO-related failures.
- * </p>
+ *
+ * IO相关错误。
  */
 public class HoodieIOException extends HoodieException {
 

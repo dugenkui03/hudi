@@ -31,5 +31,6 @@ package org.apache.hudi.common.model;
  * hoodie表类型。
  */
 public enum HoodieTableType {
+  // 写时复制； 读时合并
   COPY_ON_WRITE, MERGE_ON_READ
 }

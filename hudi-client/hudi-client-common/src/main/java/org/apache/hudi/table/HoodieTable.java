@@ -402,6 +402,8 @@ public abstract class HoodieTable<T extends HoodieRecordPayload, I, K, O> implem
       partitionWithFileList.stream().map(Pair::getValue).forEach(file -> {
         try {
           fileSystem.delete(new Path(file), false);
+
+          // 将IO异常转换为 Hoodie IO异常
         } catch (IOException e) {
           throw new HoodieIOException(e.getMessage(), e);
         }
