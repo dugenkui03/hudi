@@ -23,6 +23,7 @@ package org.apache.hudi.common.bloom;
  * Please do not change the order of the entries.
  */
 public enum BloomFilterTypeCode {
+  // 简单的，动态的
   SIMPLE,
   DYNAMIC_V0
 }
