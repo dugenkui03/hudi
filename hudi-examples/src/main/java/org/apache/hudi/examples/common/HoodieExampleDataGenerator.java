@@ -57,6 +57,7 @@ public class HoodieExampleDataGenerator<T extends HoodieRecordPayload<T>> {
   public static final String[] DEFAULT_PARTITION_PATHS =
       {DEFAULT_FIRST_PARTITION_PATH, DEFAULT_SECOND_PARTITION_PATH, DEFAULT_THIRD_PARTITION_PATH};
 
+
   //{
   //    "type":"record",
   //    "name":"triprec",
@@ -70,32 +71,8 @@ public class HoodieExampleDataGenerator<T extends HoodieRecordPayload<T>> {
   //            "type":"string"
   //        },
   //        {
-  //            "name":"rider",
-  //            "type":"string"
-  //        },
-  //        {
-  //            "name":"driver",
-  //            "type":"string"
-  //        },
-  //        {
-  //            "name":"begin_lat",
-  //            "type":"double"
-  //        },
-  //        {
-  //            "name":"begin_lon",
-  //            "type":"double"
-  //        },
-  //        {
-  //            "name":"end_lat",
-  //            "type":"double"
-  //        },
-  //        {
-  //            "name":"end_lon",
-  //            "type":"double"
-  //        },
-  //        {
-  //            "name":"fare",
-  //            "type":"double"
+  //            "name":"...",
+  //            "type":"..."
   //        }
   //    ]
   //}
