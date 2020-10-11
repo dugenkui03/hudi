@@ -19,7 +19,8 @@
 package org.apache.hudi.common.util.queue;
 
 /**
- * Producer for {@link BoundedInMemoryQueue}. Memory Bounded Buffer supports multiple producers single consumer pattern.
+ * Producer for {@link BoundedInMemoryQueue }.
+ * Memory Bounded Buffer supports multiple producers single consumer pattern.
  *
  * @param <I> Input type for buffer items produced
  */
@@ -27,8 +28,9 @@ public interface BoundedInMemoryQueueProducer<I> {
 
   /**
    * API to enqueue entries to memory bounded queue.
+   * 将任务入队
    *
-   * @param queue In Memory bounded queue
+   * @param queue In Memory bounded queue 任务队列
    */
   void produce(BoundedInMemoryQueue<I, ?> queue) throws Exception;
 }

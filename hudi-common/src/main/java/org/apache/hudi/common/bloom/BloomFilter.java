@@ -20,11 +20,15 @@ package org.apache.hudi.common.bloom;
 
 /**
  * A Bloom filter interface.
+ *
+ * "光晕" 过滤器接口。
  */
 public interface BloomFilter {
 
   /**
    * Add a key to the {@link BloomFilter}.
+   *
+   * 为过滤器添加key。
    *
    * @param key the key to the added to the {@link BloomFilter}
    */
@@ -33,6 +37,8 @@ public interface BloomFilter {
   /**
    * Tests for key membership.
    *
+   * 是否包含某个key。
+   *
    * @param key the key to be checked for membership
    * @return {@code true} if key may be found, {@code false} if key is not found for sure.
    */
@@ -40,10 +46,14 @@ public interface BloomFilter {
 
   /**
    * Serialize the bloom filter as a string.
+   *
+   * 序列化该对象数据为String。
    */
   String serializeToString();
 
   /**
+   * "光晕"索引类型码
+   *
    * @return the bloom index type code.
    **/
   BloomFilterTypeCode getBloomFilterTypeCode();

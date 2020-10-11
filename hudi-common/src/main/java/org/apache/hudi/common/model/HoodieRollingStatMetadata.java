@@ -28,12 +28,18 @@ import java.util.Map;
 
 /**
  * This class holds statistics about files belonging to a table.
+ *
+ * 关于某个表格的文件的统计类。
  */
 public class HoodieRollingStatMetadata implements Serializable {
 
   private static final Logger LOG = LogManager.getLogger(HoodieRollingStatMetadata.class);
+
+  // <分区,回滚状态>
   protected Map<String, Map<String, HoodieRollingStat>> partitionToRollingStats;
+
   private String actionType = "DUMMY_ACTION";
+  
   public static final String ROLLING_STAT_METADATA_KEY = "ROLLING_STAT";
 
   public void addRollingStat(String partitionPath, HoodieRollingStat stat) {

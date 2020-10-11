@@ -32,26 +32,37 @@ import java.util.Random;
 
 /**
  * Status of a write operation.
+ *
+ * 写操作状态。
  */
 public class WriteStatus implements Serializable {
 
   private static final long serialVersionUID = 1L;
+
   private static final long RANDOM_SEED = 9038412832L;
 
+  // 错误
   private final HashMap<HoodieKey, Throwable> errors = new HashMap<>();
 
+  // 写记录
   private final List<HoodieRecord> writtenRecords = new ArrayList<>();
 
+  // 失败的记录
   private final List<HoodieRecord> failedRecords = new ArrayList<>();
 
+  // 全局错误
   private Throwable globalError = null;
 
+  // 文件id
   private String fileId = null;
 
+  // 分区路径
   private String partitionPath = null;
 
+  // hoodie写状态
   private HoodieWriteStat stat = null;
 
+  // 所有记录数 和 所有错误记录数据
   private long totalRecords = 0;
   private long totalErrorRecords = 0;
 
@@ -62,6 +73,7 @@ public class WriteStatus implements Serializable {
   public WriteStatus(Boolean trackSuccessRecords, Double failureFraction) {
     this.trackSuccessRecords = trackSuccessRecords;
     this.failureFraction = failureFraction;
+    // todo 指定了种子，那么不同实例调用nextXXX()的结果是相同的。
     this.random = new Random(RANDOM_SEED);
   }
 

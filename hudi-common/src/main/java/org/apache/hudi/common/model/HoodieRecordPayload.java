@@ -31,8 +31,11 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Every Hoodie table has an implementation of the <code>HoodieRecordPayload</code> This abstracts out callbacks which
- * depend on record specific logic.
+ * Every Hoodie table has an implementation of the HoodieRecordPayload.
+ * This abstracts out callbacks which depend on record specific logic.
+ *
+ * fixme
+ *      每一个表都有一个实现类；
  */
 @PublicAPIClass(maturity = ApiMaturityLevel.STABLE)
 public interface HoodieRecordPayload<T extends HoodieRecordPayload> extends Serializable {

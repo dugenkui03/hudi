@@ -19,9 +19,9 @@
 package org.apache.hudi.exception;
 
 /**
- * <p>
- * Exception thrown for any higher level errors when <code>HoodieClient</code> is doing a delta commit.
- * </p>
+ * Exception thrown for any higher level errors when <code>HoodieClient</code> is doing a delta(增量) commit.
+ *
+ * 当 HoodieClient 进行增量提交的时候，抛异常。
  */
 public class HoodieAppendException extends HoodieException {
 

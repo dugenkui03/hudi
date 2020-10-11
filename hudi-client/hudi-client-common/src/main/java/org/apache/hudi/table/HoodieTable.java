@@ -100,7 +100,7 @@ public abstract class HoodieTable<T extends HoodieRecordPayload, I, K, O> implem
     this.config = config;
     this.hadoopConfiguration = context.getHadoopConf();
     this.viewManager = FileSystemViewManager.createViewManager(hadoopConfiguration,
-        config.getViewStorageConfig());
+            config.getViewStorageConfig());
     this.metaClient = metaClient;
     this.index = getIndex(config);
     this.taskContextSupplier = context.getTaskContextSupplier();
@@ -123,7 +123,7 @@ public abstract class HoodieTable<T extends HoodieRecordPayload, I, K, O> implem
    * @return HoodieWriteMetadata
    */
   public abstract HoodieWriteMetadata<O> upsert(HoodieEngineContext context, String instantTime,
-      I records);
+                                                I records);
 
   /**
    * Insert a batch of new records into Hoodie table at the supplied instantTime.
@@ -133,7 +133,7 @@ public abstract class HoodieTable<T extends HoodieRecordPayload, I, K, O> implem
    * @return HoodieWriteMetadata
    */
   public abstract HoodieWriteMetadata<O> insert(HoodieEngineContext context, String instantTime,
-      I records);
+                                                I records);
 
   /**
    * Bulk Insert a batch of new records into Hoodie table at the supplied instantTime.
@@ -144,7 +144,7 @@ public abstract class HoodieTable<T extends HoodieRecordPayload, I, K, O> implem
    * @return HoodieWriteMetadata
    */
   public abstract HoodieWriteMetadata<O> bulkInsert(HoodieEngineContext context, String instantTime,
-      I records, Option<BulkInsertPartitioner<I>> bulkInsertPartitioner);
+                                                    I records, Option<BulkInsertPartitioner<I>> bulkInsertPartitioner);
 
   /**
    * Deletes a list of {@link HoodieKey}s from the Hoodie table, at the supplied instantTime {@link HoodieKey}s will be
@@ -167,7 +167,7 @@ public abstract class HoodieTable<T extends HoodieRecordPayload, I, K, O> implem
    * @return HoodieWriteMetadata
    */
   public abstract HoodieWriteMetadata<O> upsertPrepped(HoodieEngineContext context, String instantTime,
-      I preppedRecords);
+                                                       I preppedRecords);
 
   /**
    * Inserts the given prepared records into the Hoodie table, at the supplied instantTime.
@@ -179,7 +179,7 @@ public abstract class HoodieTable<T extends HoodieRecordPayload, I, K, O> implem
    * @return HoodieWriteMetadata
    */
   public abstract HoodieWriteMetadata<O> insertPrepped(HoodieEngineContext context, String instantTime,
-      I preppedRecords);
+                                                       I preppedRecords);
 
   /**
    * Bulk Insert the given prepared records into the Hoodie table, at the supplied instantTime.
@@ -192,7 +192,7 @@ public abstract class HoodieTable<T extends HoodieRecordPayload, I, K, O> implem
    * @return HoodieWriteMetadata
    */
   public abstract HoodieWriteMetadata<O> bulkInsertPrepped(HoodieEngineContext context, String instantTime,
-      I preppedRecords,  Option<BulkInsertPartitioner<I>> bulkInsertPartitioner);
+                                                           I preppedRecords,  Option<BulkInsertPartitioner<I>> bulkInsertPartitioner);
 
   /**
    * Replaces all the existing records and inserts the specified new records into Hoodie table at the supplied instantTime,
@@ -324,7 +324,7 @@ public abstract class HoodieTable<T extends HoodieRecordPayload, I, K, O> implem
    * @param compactionInstantTime Instant Time
    */
   public abstract HoodieWriteMetadata<O> compact(HoodieEngineContext context,
-                                              String compactionInstantTime);
+                                                 String compactionInstantTime);
 
   /**
    * Perform metadata/full bootstrap of a Hudi table.
@@ -402,6 +402,8 @@ public abstract class HoodieTable<T extends HoodieRecordPayload, I, K, O> implem
       partitionWithFileList.stream().map(Pair::getValue).forEach(file -> {
         try {
           fileSystem.delete(new Path(file), false);
+
+          // 将IO异常转换为 Hoodie IO异常
         } catch (IOException e) {
           throw new HoodieIOException(e.getMessage(), e);
         }
@@ -439,9 +441,9 @@ public abstract class HoodieTable<T extends HoodieRecordPayload, I, K, O> implem
       // we are not including log appends here, since they are already fail-safe.
       Set<String> invalidDataPaths = markers.createdAndMergedDataPaths(context, config.getFinalizeWriteParallelism());
       Set<String> validDataPaths = stats.stream()
-          .map(HoodieWriteStat::getPath)
-          .filter(p -> p.endsWith(this.getBaseFileExtension()))
-          .collect(Collectors.toSet());
+              .map(HoodieWriteStat::getPath)
+              .filter(p -> p.endsWith(this.getBaseFileExtension()))
+              .collect(Collectors.toSet());
 
       // Contains list of partially created files. These needs to be cleaned up.
       invalidDataPaths.removeAll(validDataPaths);
@@ -449,8 +451,8 @@ public abstract class HoodieTable<T extends HoodieRecordPayload, I, K, O> implem
       if (!invalidDataPaths.isEmpty()) {
         LOG.info("Removing duplicate data files created due to spark retries before committing. Paths=" + invalidDataPaths);
         Map<String, List<Pair<String, String>>> invalidPathsByPartition = invalidDataPaths.stream()
-            .map(dp -> Pair.of(new Path(dp).getParent().toString(), new Path(basePath, dp).toString()))
-            .collect(Collectors.groupingBy(Pair::getKey));
+                .map(dp -> Pair.of(new Path(dp).getParent().toString(), new Path(basePath, dp).toString()))
+                .collect(Collectors.groupingBy(Pair::getKey));
 
         // Ensure all files in delete list is actually present. This is mandatory for an eventually consistent FS.
         // Otherwise, we may miss deleting such files. If files are not found even after retries, fail the commit
@@ -485,9 +487,9 @@ public abstract class HoodieTable<T extends HoodieRecordPayload, I, K, O> implem
     // This will either ensure all files to be deleted are present.
     context.setJobStatus(this.getClass().getSimpleName(), "Wait for all files to appear/disappear");
     boolean checkPassed =
-        context.map(new ArrayList<>(groupByPartition.entrySet()), partitionWithFileList -> waitForCondition(partitionWithFileList.getKey(),
-            partitionWithFileList.getValue().stream(), visibility), config.getFinalizeWriteParallelism())
-            .stream().allMatch(x -> x);
+            context.map(new ArrayList<>(groupByPartition.entrySet()), partitionWithFileList -> waitForCondition(partitionWithFileList.getKey(),
+                    partitionWithFileList.getValue().stream(), visibility), config.getFinalizeWriteParallelism())
+                    .stream().allMatch(x -> x);
     if (!checkPassed) {
       throw new HoodieIOException("Consistency check failed to ensure all files " + visibility);
     }
@@ -513,7 +515,7 @@ public abstract class HoodieTable<T extends HoodieRecordPayload, I, K, O> implem
   public static ConsistencyGuard getConsistencyGuard(FileSystem fs, ConsistencyGuardConfig consistencyGuardConfig) throws IOException {
     try {
       return consistencyGuardConfig.shouldEnableOptimisticConsistencyGuard()
-          ? new OptimisticConsistencyGuard(fs, consistencyGuardConfig) : new FailSafeConsistencyGuard(fs, consistencyGuardConfig);
+              ? new OptimisticConsistencyGuard(fs, consistencyGuardConfig) : new FailSafeConsistencyGuard(fs, consistencyGuardConfig);
     } catch (Throwable e) {
       throw new IOException("Could not load ConsistencyGuard ", e);
     }
@@ -550,7 +552,7 @@ public abstract class HoodieTable<T extends HoodieRecordPayload, I, K, O> implem
 
     if (!isValid) {
       throw new HoodieException("Failed schema compatibility check for writerSchema :" + writerSchema
-          + ", table schema :" + tableSchema + ", base path :" + metaClient.getBasePath());
+              + ", table schema :" + tableSchema + ", base path :" + metaClient.getBasePath());
     }
   }
 
@@ -586,7 +588,7 @@ public abstract class HoodieTable<T extends HoodieRecordPayload, I, K, O> implem
         return HoodieLogBlockType.HFILE_DATA_BLOCK;
       default:
         throw new HoodieException("Base file format " + getBaseFileFormat()
-            + " does not have associated log block format");
+                + " does not have associated log block format");
     }
   }
 

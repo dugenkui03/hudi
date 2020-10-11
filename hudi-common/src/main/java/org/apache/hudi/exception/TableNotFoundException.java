@@ -26,7 +26,8 @@ import java.io.IOException;
 /**
  * <p>
  * Exception thrown to indicate that a hoodie table was not found on the path provided.
- * <p>
+ *
+ * 在所提供的路径没有发现表的时候，抛出该异常。
  */
 public class TableNotFoundException extends HoodieException {
 

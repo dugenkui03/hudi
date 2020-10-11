@@ -24,23 +24,29 @@ import java.util.Locale;
 
 /**
  * The supported write operation types, used by commitMetadata.
+ *
+ * 支持的写操作类型，被 ？？commitMetadata？？ 使用
  */
 public enum WriteOperationType {
-  // directly insert
+  // 插入
   INSERT("insert"),
   INSERT_PREPPED("insert_prepped"),
-  // update and insert
+
+  // 更新、插入
   UPSERT("upsert"),
   UPSERT_PREPPED("upsert_prepped"),
-  // bulk insert
+
+  // 批量插入
   BULK_INSERT("bulk_insert"),
   BULK_INSERT_PREPPED("bulk_insert_prepped"),
-  // delete
+
+  // 删除
   DELETE("delete"),
   BOOTSTRAP("bootstrap"),
   // insert overwrite
   INSERT_OVERWRITE("insert_overwrite"),
   // used for old version
+  // 老版本使用的枚举
   UNKNOWN("unknown");
 
   private final String value;
@@ -71,6 +77,7 @@ public enum WriteOperationType {
       case "insert_overwrite":
         return INSERT_OVERWRITE;
       default:
+        // todo 用不用把参数写到返回值里边
         throw new HoodieException("Invalid value of Type.");
     }
   }

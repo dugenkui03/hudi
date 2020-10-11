@@ -22,6 +22,8 @@ import org.apache.hudi.callback.HoodieWriteCommitCallback;
 
 /**
  * Exception thrown for any higher level errors when {@link HoodieWriteCommitCallback} is executing a callback.
+ *
+ * 针对 HoodieWriteCommitCallback 执行回调事引起的异常。
  */
 public class HoodieCommitCallbackException extends HoodieException {
 

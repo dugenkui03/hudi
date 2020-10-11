@@ -23,19 +23,22 @@ import java.util.Objects;
 
 /**
  * HoodieKey consists of
- * <p>
- * - recordKey : a recordKey that acts as primary key for a record.
- * - partitionPath : the partition path of a record.
+ *    1. recordKey : a recordKey that acts as primary key for a record.
+ *    2. partitionPath : the partition path of a record.
+ *
+ * fixme：包含作为记录主键的recordKey和记录的分区路径。
  */
 public class HoodieKey implements Serializable {
 
+  // fixme 作为记录的主键
   private final String recordKey;
 
+  // fixme 分区路径
   private final String partitionPath;
 
   public HoodieKey(String recordKey, String partitionPath) {
-    this.recordKey = recordKey;
-    this.partitionPath = partitionPath;
+      this.recordKey = recordKey;
+      this.partitionPath = partitionPath;
   }
 
   public String getRecordKey() {
@@ -48,27 +51,28 @@ public class HoodieKey implements Serializable {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    HoodieKey otherKey = (HoodieKey) o;
-    return Objects.equals(recordKey, otherKey.recordKey) && Objects.equals(partitionPath, otherKey.partitionPath);
+      if (this == o) {
+        return true;
+      }
+      if (o == null || getClass() != o.getClass()) {
+        return false;
+      }
+      HoodieKey otherKey = (HoodieKey) o;
+      return Objects.equals(recordKey, otherKey.recordKey) && Objects.equals(partitionPath, otherKey.partitionPath);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(recordKey, partitionPath);
+      return Objects.hash(recordKey, partitionPath);
   }
 
   @Override
   public String toString() {
-    final StringBuilder sb = new StringBuilder("HoodieKey {");
-    sb.append(" recordKey=").append(recordKey);
-    sb.append(" partitionPath=").append(partitionPath);
-    sb.append('}');
-    return sb.toString();
+      // todo 这种append有开销吗
+      final StringBuilder sb = new StringBuilder("HoodieKey {");
+      sb.append(" recordKey=").append(recordKey);
+      sb.append(" partitionPath=").append(partitionPath);
+      sb.append('}');
+      return sb.toString();
   }
 }

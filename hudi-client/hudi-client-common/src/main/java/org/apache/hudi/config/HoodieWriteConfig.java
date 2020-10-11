@@ -95,7 +95,7 @@ public class HoodieWriteConfig extends DefaultHoodieConfig {
   public static final String DEFAULT_MARKERS_DELETE_PARALLELISM = "100";
   public static final String BULKINSERT_SORT_MODE = "hoodie.bulkinsert.sort.mode";
   public static final String DEFAULT_BULKINSERT_SORT_MODE = BulkInsertSortMode.GLOBAL_SORT
-      .toString();
+          .toString();
 
   public static final String EMBEDDED_TIMELINE_SERVER_ENABLED = "hoodie.embed.timeline.server";
   public static final String DEFAULT_EMBEDDED_TIMELINE_SERVER_ENABLED = "true";
@@ -106,7 +106,7 @@ public class HoodieWriteConfig extends DefaultHoodieConfig {
   public static final String DEFAULT_FAIL_ON_TIMELINE_ARCHIVING_ENABLED = "true";
   // time between successive attempts to ensure written data's metadata is consistent on storage
   public static final String INITIAL_CONSISTENCY_CHECK_INTERVAL_MS_PROP =
-      "hoodie.consistency.check.initial_interval_ms";
+          "hoodie.consistency.check.initial_interval_ms";
   public static long DEFAULT_INITIAL_CONSISTENCY_CHECK_INTERVAL_MS = 2000L;
 
   // max interval time
@@ -128,7 +128,7 @@ public class HoodieWriteConfig extends DefaultHoodieConfig {
    * (disabled by default) which will allow this old behavior.
    */
   public static final String ALLOW_MULTI_WRITE_ON_SAME_INSTANT =
-      "_.hoodie.allow.multi.write.on.same.instant";
+          "_.hoodie.allow.multi.write.on.same.instant";
   public static final String DEFAULT_ALLOW_MULTI_WRITE_ON_SAME_INSTANT = "false";
 
   public static final String EXTERNAL_RECORD_AND_SCHEMA_TRANSFORMATION = AVRO_SCHEMA + ".externalTransformation";
@@ -620,7 +620,7 @@ public class HoodieWriteConfig extends DefaultHoodieConfig {
       return props.getProperty(HoodieMetricsDatadogConfig.DATADOG_API_KEY);
     } else {
       Supplier<String> apiKeySupplier = ReflectionUtils.loadClass(
-          props.getProperty(HoodieMetricsDatadogConfig.DATADOG_API_KEY_SUPPLIER));
+              props.getProperty(HoodieMetricsDatadogConfig.DATADOG_API_KEY_SUPPLIER));
       return apiKeySupplier.get();
     }
   }
@@ -643,7 +643,7 @@ public class HoodieWriteConfig extends DefaultHoodieConfig {
 
   public List<String> getDatadogMetricTags() {
     return Arrays.stream(props.getProperty(
-        HoodieMetricsDatadogConfig.DATADOG_METRIC_TAGS).split("\\s*,\\s*")).collect(Collectors.toList());
+            HoodieMetricsDatadogConfig.DATADOG_METRIC_TAGS).split("\\s*,\\s*")).collect(Collectors.toList());
   }
 
   public String getMetricReporterClassName() {
@@ -988,67 +988,67 @@ public class HoodieWriteConfig extends DefaultHoodieConfig {
       // Check for mandatory properties
       setDefaultOnCondition(props, !props.containsKey(INSERT_PARALLELISM), INSERT_PARALLELISM, DEFAULT_PARALLELISM);
       setDefaultOnCondition(props, !props.containsKey(BULKINSERT_PARALLELISM), BULKINSERT_PARALLELISM,
-          DEFAULT_PARALLELISM);
+              DEFAULT_PARALLELISM);
       setDefaultOnCondition(props, !props.containsKey(UPSERT_PARALLELISM), UPSERT_PARALLELISM, DEFAULT_PARALLELISM);
       setDefaultOnCondition(props, !props.containsKey(DELETE_PARALLELISM), DELETE_PARALLELISM, DEFAULT_PARALLELISM);
       setDefaultOnCondition(props, !props.containsKey(ROLLBACK_PARALLELISM), ROLLBACK_PARALLELISM,
-          DEFAULT_ROLLBACK_PARALLELISM);
+              DEFAULT_ROLLBACK_PARALLELISM);
       setDefaultOnCondition(props, !props.containsKey(ROLLBACK_USING_MARKERS), ROLLBACK_USING_MARKERS,
-          DEFAULT_ROLLBACK_USING_MARKERS);
+              DEFAULT_ROLLBACK_USING_MARKERS);
       setDefaultOnCondition(props, !props.containsKey(COMBINE_BEFORE_INSERT_PROP), COMBINE_BEFORE_INSERT_PROP,
-          DEFAULT_COMBINE_BEFORE_INSERT);
+              DEFAULT_COMBINE_BEFORE_INSERT);
       setDefaultOnCondition(props, !props.containsKey(COMBINE_BEFORE_UPSERT_PROP), COMBINE_BEFORE_UPSERT_PROP,
-          DEFAULT_COMBINE_BEFORE_UPSERT);
+              DEFAULT_COMBINE_BEFORE_UPSERT);
       setDefaultOnCondition(props, !props.containsKey(COMBINE_BEFORE_DELETE_PROP), COMBINE_BEFORE_DELETE_PROP,
-          DEFAULT_COMBINE_BEFORE_DELETE);
+              DEFAULT_COMBINE_BEFORE_DELETE);
       setDefaultOnCondition(props, !props.containsKey(ALLOW_MULTI_WRITE_ON_SAME_INSTANT),
-          ALLOW_MULTI_WRITE_ON_SAME_INSTANT, DEFAULT_ALLOW_MULTI_WRITE_ON_SAME_INSTANT);
+              ALLOW_MULTI_WRITE_ON_SAME_INSTANT, DEFAULT_ALLOW_MULTI_WRITE_ON_SAME_INSTANT);
       setDefaultOnCondition(props, !props.containsKey(WRITE_STATUS_STORAGE_LEVEL), WRITE_STATUS_STORAGE_LEVEL,
-          DEFAULT_WRITE_STATUS_STORAGE_LEVEL);
+              DEFAULT_WRITE_STATUS_STORAGE_LEVEL);
       setDefaultOnCondition(props, !props.containsKey(HOODIE_AUTO_COMMIT_PROP), HOODIE_AUTO_COMMIT_PROP,
-          DEFAULT_HOODIE_AUTO_COMMIT);
+              DEFAULT_HOODIE_AUTO_COMMIT);
       setDefaultOnCondition(props, !props.containsKey(HOODIE_ASSUME_DATE_PARTITIONING_PROP),
-          HOODIE_ASSUME_DATE_PARTITIONING_PROP, DEFAULT_ASSUME_DATE_PARTITIONING);
+              HOODIE_ASSUME_DATE_PARTITIONING_PROP, DEFAULT_ASSUME_DATE_PARTITIONING);
       setDefaultOnCondition(props, !props.containsKey(HOODIE_WRITE_STATUS_CLASS_PROP), HOODIE_WRITE_STATUS_CLASS_PROP,
-          DEFAULT_HOODIE_WRITE_STATUS_CLASS);
+              DEFAULT_HOODIE_WRITE_STATUS_CLASS);
       setDefaultOnCondition(props, !props.containsKey(FINALIZE_WRITE_PARALLELISM), FINALIZE_WRITE_PARALLELISM,
-          DEFAULT_FINALIZE_WRITE_PARALLELISM);
+              DEFAULT_FINALIZE_WRITE_PARALLELISM);
       setDefaultOnCondition(props, !props.containsKey(MARKERS_DELETE_PARALLELISM), MARKERS_DELETE_PARALLELISM,
-          DEFAULT_MARKERS_DELETE_PARALLELISM);
+              DEFAULT_MARKERS_DELETE_PARALLELISM);
       setDefaultOnCondition(props, !props.containsKey(EMBEDDED_TIMELINE_SERVER_ENABLED),
-          EMBEDDED_TIMELINE_SERVER_ENABLED, DEFAULT_EMBEDDED_TIMELINE_SERVER_ENABLED);
+              EMBEDDED_TIMELINE_SERVER_ENABLED, DEFAULT_EMBEDDED_TIMELINE_SERVER_ENABLED);
       setDefaultOnCondition(props, !props.containsKey(INITIAL_CONSISTENCY_CHECK_INTERVAL_MS_PROP),
-          INITIAL_CONSISTENCY_CHECK_INTERVAL_MS_PROP, String.valueOf(DEFAULT_INITIAL_CONSISTENCY_CHECK_INTERVAL_MS));
+              INITIAL_CONSISTENCY_CHECK_INTERVAL_MS_PROP, String.valueOf(DEFAULT_INITIAL_CONSISTENCY_CHECK_INTERVAL_MS));
       setDefaultOnCondition(props, !props.containsKey(MAX_CONSISTENCY_CHECK_INTERVAL_MS_PROP),
-          MAX_CONSISTENCY_CHECK_INTERVAL_MS_PROP, String.valueOf(DEFAULT_MAX_CONSISTENCY_CHECK_INTERVAL_MS));
+              MAX_CONSISTENCY_CHECK_INTERVAL_MS_PROP, String.valueOf(DEFAULT_MAX_CONSISTENCY_CHECK_INTERVAL_MS));
       setDefaultOnCondition(props, !props.containsKey(MAX_CONSISTENCY_CHECKS_PROP), MAX_CONSISTENCY_CHECKS_PROP,
-          String.valueOf(DEFAULT_MAX_CONSISTENCY_CHECKS));
+              String.valueOf(DEFAULT_MAX_CONSISTENCY_CHECKS));
       setDefaultOnCondition(props, !props.containsKey(FAIL_ON_TIMELINE_ARCHIVING_ENABLED_PROP),
-          FAIL_ON_TIMELINE_ARCHIVING_ENABLED_PROP, DEFAULT_FAIL_ON_TIMELINE_ARCHIVING_ENABLED);
+              FAIL_ON_TIMELINE_ARCHIVING_ENABLED_PROP, DEFAULT_FAIL_ON_TIMELINE_ARCHIVING_ENABLED);
       setDefaultOnCondition(props, !props.containsKey(AVRO_SCHEMA_VALIDATE), AVRO_SCHEMA_VALIDATE, DEFAULT_AVRO_SCHEMA_VALIDATE);
       setDefaultOnCondition(props, !props.containsKey(BULKINSERT_SORT_MODE),
-          BULKINSERT_SORT_MODE, DEFAULT_BULKINSERT_SORT_MODE);
+              BULKINSERT_SORT_MODE, DEFAULT_BULKINSERT_SORT_MODE);
 
       // Make sure the props is propagated
       setDefaultOnCondition(props, !isIndexConfigSet, HoodieIndexConfig.newBuilder().fromProperties(props).build());
       setDefaultOnCondition(props, !isStorageConfigSet, HoodieStorageConfig.newBuilder().fromProperties(props).build());
       setDefaultOnCondition(props, !isCompactionConfigSet,
-          HoodieCompactionConfig.newBuilder().fromProperties(props).build());
+              HoodieCompactionConfig.newBuilder().fromProperties(props).build());
       setDefaultOnCondition(props, !isMetricsConfigSet, HoodieMetricsConfig.newBuilder().fromProperties(props).build());
       setDefaultOnCondition(props, !isBootstrapConfigSet,
-          HoodieBootstrapConfig.newBuilder().fromProperties(props).build());
+              HoodieBootstrapConfig.newBuilder().fromProperties(props).build());
       setDefaultOnCondition(props, !isMemoryConfigSet, HoodieMemoryConfig.newBuilder().fromProperties(props).build());
       setDefaultOnCondition(props, !isViewConfigSet,
-          FileSystemViewStorageConfig.newBuilder().fromProperties(props).build());
+              FileSystemViewStorageConfig.newBuilder().fromProperties(props).build());
       setDefaultOnCondition(props, !isConsistencyGuardSet,
-          ConsistencyGuardConfig.newBuilder().fromProperties(props).build());
+              ConsistencyGuardConfig.newBuilder().fromProperties(props).build());
       setDefaultOnCondition(props, !isCallbackConfigSet,
-          HoodieWriteCommitCallbackConfig.newBuilder().fromProperties(props).build());
+              HoodieWriteCommitCallbackConfig.newBuilder().fromProperties(props).build());
 
       setDefaultOnCondition(props, !props.containsKey(EXTERNAL_RECORD_AND_SCHEMA_TRANSFORMATION),
-          EXTERNAL_RECORD_AND_SCHEMA_TRANSFORMATION, DEFAULT_EXTERNAL_RECORD_AND_SCHEMA_TRANSFORMATION);
+              EXTERNAL_RECORD_AND_SCHEMA_TRANSFORMATION, DEFAULT_EXTERNAL_RECORD_AND_SCHEMA_TRANSFORMATION);
       setDefaultOnCondition(props, !props.containsKey(TIMELINE_LAYOUT_VERSION), TIMELINE_LAYOUT_VERSION,
-          String.valueOf(TimelineLayoutVersion.CURR_VERSION));
+              String.valueOf(TimelineLayoutVersion.CURR_VERSION));
     }
 
     private void validate() {

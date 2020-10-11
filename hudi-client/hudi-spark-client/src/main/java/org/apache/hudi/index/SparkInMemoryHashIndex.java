@@ -41,6 +41,9 @@ import java.util.concurrent.ConcurrentMap;
  * Hoodie Index implementation backed by an in-memory Hash map.
  * <p>
  * ONLY USE FOR LOCAL TESTING
+ *
+ * fixme
+ *    本地测试用的，在本地内存使用hashmap创建索引。
  */
 @SuppressWarnings("checkstyle:LineLength")
 public class SparkInMemoryHashIndex<T extends HoodieRecordPayload> extends SparkHoodieIndex<T> {

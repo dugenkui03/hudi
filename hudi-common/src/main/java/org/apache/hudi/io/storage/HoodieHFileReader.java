@@ -52,6 +52,8 @@ import org.apache.hudi.exception.HoodieException;
 import org.apache.hudi.exception.HoodieIOException;
 
 public class HoodieHFileReader<R extends IndexedRecord> implements HoodieFileReader {
+
+  // hadoop路径、配置、reader、avro模式
   private Path path;
   private Configuration conf;
   private HFile.Reader reader;

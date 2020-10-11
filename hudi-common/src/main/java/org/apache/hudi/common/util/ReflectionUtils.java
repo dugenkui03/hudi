@@ -47,6 +47,7 @@ public class ReflectionUtils {
 
   private static Map<String, Class<?>> clazzCache = new HashMap<>();
 
+  // todo 不用加哥 badCacheMap 嘛，缓存哪些抛异常的类名
   private static Class<?> getClass(String clazzName) {
     if (!clazzCache.containsKey(clazzName)) {
       try {
@@ -80,7 +81,7 @@ public class ReflectionUtils {
   }
 
   /**
-   * Creates an instnace of the given class. Use this version when dealing with interface types as constructor args.
+   * Creates an instance of the given class. Use this version when dealing with interface types as constructor args.
    */
   public static Object loadClass(String clazz, Class<?>[] constructorArgTypes, Object... constructorArgs) {
     try {
@@ -92,6 +93,10 @@ public class ReflectionUtils {
 
   /**
    * Creates an instance of the given class. Constructor arg types are inferred.
+   *
+   * @param clazz 类的全限定名称
+   * @param constructorArgs
+   * @return
    */
   public static Object loadClass(String clazz, Object... constructorArgs) {
     Class<?>[] constructorArgTypes = Arrays.stream(constructorArgs).map(Object::getClass).toArray(Class<?>[]::new);
@@ -133,23 +138,33 @@ public class ReflectionUtils {
 
   /**
    * Recursive method used to find all classes in a given directory and subdirs.
+   * fixme
+   *     在一个编译好的类目录中，查找指定目录下的所有的 .class文件 相对路径
    *
-   * @param directory   The base directory
+   * @param directory   The base directory 基本目录
    * @param packageName The package name for classes found inside the base directory
    * @return classes in the package
+   *         包中的类
    */
   private static List<String> findClasses(File directory, String packageName) {
     List<String> classes = new ArrayList<>();
+
+    // directory指定的目录是否存在
     if (!directory.exists()) {
-      return classes;
+        return classes;
     }
+
+    // 获取目录下 文件File 列表
     File[] files = directory.listFiles();
     for (File file : Objects.requireNonNull(files)) {
-      if (file.isDirectory()) {
-        classes.addAll(findClasses(file, packageName + "." + file.getName()));
-      } else if (file.getName().endsWith(".class")) {
-        classes.add(packageName + '.' + file.getName().substring(0, file.getName().length() - 6));
-      }
+        // 如果是目录，递归获取下边的文件
+        if (file.isDirectory()) {
+            classes.addAll(findClasses(file, packageName + "." + file.getName()));
+        } else if (file.getName().endsWith(".class")) {
+            // 如果文件名称以 .class 结尾，则放到结果列表中
+            // todo 为什么要 -6？好沙雕的代码
+            classes.add(packageName + '.' + file.getName().substring(0, file.getName().length() - 6));
+        }
     }
     return classes;
   }

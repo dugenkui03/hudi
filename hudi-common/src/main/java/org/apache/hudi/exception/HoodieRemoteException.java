@@ -22,6 +22,8 @@ import java.io.IOException;
 
 /**
  * Hoodie remote exception.
+ *
+ * ？远程错误？
  */
 public class HoodieRemoteException extends RuntimeException {
 

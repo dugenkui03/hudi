@@ -28,13 +28,17 @@ import org.apache.avro.generic.IndexedRecord;
 import java.io.IOException;
 
 /**
- * This is a payload to wrap a existing Hoodie Avro Record. Useful to create a HoodieRecord over existing GenericRecords
- * in a hoodie tables (useful in compactions)
+ * This is a payload to wrap a existing Hoodie Avro Record.
+ * Useful to create a HoodieRecord over existing GenericRecords in a hoodie tables (useful in compactions 压缩)
+ *
+ * 将 Avro 记录包装成数据。用于创建hoodie表中的记录。
  */
 public class HoodieAvroPayload implements HoodieRecordPayload<HoodieAvroPayload> {
 
-  // Store the GenericRecord converted to bytes - 1) Doesn't store schema hence memory efficient 2) Makes the payload
-  // java serializable
+  // Store the GenericRecord converted to bytes
+  // 1) Doesn't store schema hence memory efficient
+  // 2) Makes the payload java serializable
+  // 将数据转换为byte数组：不保存schema、考虑到存储因素；使用java对数据进行序列化；
   private final byte[] recordBytes;
 
   public HoodieAvroPayload(Option<GenericRecord> record) {

@@ -20,6 +20,8 @@ package org.apache.hudi.common.model;
 
 /**
  * The supported action types.
+ *
+ * 支持的操作类型：提交，savepoint，压缩，清除，回滚，替换提交
  */
 public enum ActionType {
   //TODO HUDI-1281 make deltacommit part of this

@@ -27,11 +27,19 @@ import org.apache.hudi.avro.model.HoodieFileStatus;
  */
 public class BootstrapFileMapping implements Serializable, Comparable<BootstrapFileMapping> {
 
+  // 启动基本路径
   private final String bootstrapBasePath;
+
+  // 启动分区路径
   private final String bootstrapPartitionPath;
+
+  // hoodie文件状态
   private final HoodieFileStatus bootstrapFileStatus;
 
+  // 分区路径
   private final String partitionPath;
+
+  // 文件id
   private final String fileId;
 
   public BootstrapFileMapping(String bootstrapBasePath, String bootstrapPartitionPath, String partitionPath,
@@ -46,12 +54,12 @@ public class BootstrapFileMapping implements Serializable, Comparable<BootstrapF
   @Override
   public String toString() {
     return "BootstrapFileMapping{"
-        + "bootstrapBasePath='" + bootstrapBasePath + '\''
-        + ", bootstrapPartitionPath='" + bootstrapPartitionPath + '\''
-        + ", bootstrapFileStatus=" + bootstrapFileStatus
-        + ", partitionPath='" + partitionPath + '\''
-        + ", fileId='" + fileId + '\''
-        + '}';
+            + "bootstrapBasePath='" + bootstrapBasePath + '\''
+            + ", bootstrapPartitionPath='" + bootstrapPartitionPath + '\''
+            + ", bootstrapFileStatus=" + bootstrapFileStatus
+            + ", partitionPath='" + partitionPath + '\''
+            + ", fileId='" + fileId + '\''
+            + '}';
   }
 
   @Override
@@ -64,10 +72,10 @@ public class BootstrapFileMapping implements Serializable, Comparable<BootstrapF
     }
     BootstrapFileMapping mapping = (BootstrapFileMapping) o;
     return Objects.equals(bootstrapBasePath, mapping.bootstrapBasePath)
-        && Objects.equals(bootstrapPartitionPath, mapping.bootstrapPartitionPath)
-        && Objects.equals(partitionPath, mapping.partitionPath)
-        && Objects.equals(bootstrapFileStatus, mapping.bootstrapFileStatus)
-        && Objects.equals(fileId, mapping.fileId);
+            && Objects.equals(bootstrapPartitionPath, mapping.bootstrapPartitionPath)
+            && Objects.equals(partitionPath, mapping.partitionPath)
+            && Objects.equals(bootstrapFileStatus, mapping.bootstrapFileStatus)
+            && Objects.equals(fileId, mapping.fileId);
   }
 
   @Override

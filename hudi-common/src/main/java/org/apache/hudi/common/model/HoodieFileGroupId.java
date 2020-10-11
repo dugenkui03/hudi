@@ -26,8 +26,10 @@ import java.util.Objects;
  */
 public class HoodieFileGroupId implements Serializable, Comparable<HoodieFileGroupId> {
 
+  // 分区路径
   private final String partitionPath;
 
+  // 文件id
   private final String fileId;
 
   public HoodieFileGroupId(String partitionPath, String fileId) {

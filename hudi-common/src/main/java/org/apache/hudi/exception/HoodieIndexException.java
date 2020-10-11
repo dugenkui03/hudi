@@ -21,7 +21,8 @@ package org.apache.hudi.exception;
 /**
  * <p>
  * Exception thrown for HoodieIndex related errors.
- * </p>
+ *
+ * 索引相关错误。
  */
 public class HoodieIndexException extends HoodieException {
 

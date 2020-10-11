@@ -18,6 +18,8 @@
 
 package org.apache.hudi.common.util;
 
+import java.util.function.Predicate;
+
 /*
  * Simple utility to test validation conditions (to replace Guava's PreConditions)
  */
@@ -67,4 +69,5 @@ public class ValidationUtils {
       throw new IllegalStateException(errorMessage);
     }
   }
+
 }

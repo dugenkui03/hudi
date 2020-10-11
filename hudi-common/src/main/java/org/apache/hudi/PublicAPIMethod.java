@@ -30,6 +30,7 @@ import java.lang.annotation.Target;
  */
 @Inherited
 @Documented
+// 注解在方法上
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.CLASS)
 public @interface PublicAPIMethod {

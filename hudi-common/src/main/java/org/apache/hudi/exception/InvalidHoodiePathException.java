@@ -22,6 +22,8 @@ import org.apache.hadoop.fs.Path;
 
 /**
  * An exception thrown when hoodie path is invalid.
+ *
+ * 路径无效。
  */
 public class InvalidHoodiePathException extends HoodieException {
 

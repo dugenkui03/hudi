@@ -34,6 +34,8 @@ public interface HoodieInternalRowFileWriter {
 
   /**
    * Writes an {@link InternalRow} to the HoodieInternalRowFileWriter.
+   * 
+   * 将 row 写入到当前对象
    *
    * @throws IOException on any exception while writing.
    */

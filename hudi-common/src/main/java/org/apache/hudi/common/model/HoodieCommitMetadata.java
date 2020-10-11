@@ -43,11 +43,19 @@ import java.util.Map;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class HoodieCommitMetadata implements Serializable {
 
-  public static final String SCHEMA_KEY = "schema";
+  // 日志类
   private static final Logger LOG = LogManager.getLogger(HoodieCommitMetadata.class);
+
+  // schema
+  public static final String SCHEMA_KEY = "schema";
+
+  // 分区 -> 写状态
   protected Map<String, List<HoodieWriteStat>> partitionToWriteStats;
+
+  // 是否压缩？ todo 不用包装类型
   protected Boolean compacted;
 
+  // 额外的元数据
   protected Map<String, String> extraMetadata;
 
   protected WriteOperationType operationType = WriteOperationType.UNKNOWN;

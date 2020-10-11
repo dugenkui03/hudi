@@ -22,6 +22,8 @@ import java.io.IOException;
 
 /**
  * An exception throws when meet serialization problems.
+ *
+ * 序列化异常。
  */
 public class HoodieSerializationException extends HoodieException {
 

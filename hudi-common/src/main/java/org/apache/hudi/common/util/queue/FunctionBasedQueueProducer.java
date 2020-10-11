@@ -40,8 +40,6 @@ public class FunctionBasedQueueProducer<I> implements BoundedInMemoryQueueProduc
 
   @Override
   public void produce(BoundedInMemoryQueue<I, ?> queue) {
-    LOG.info("starting function which will enqueue records");
-    producerFunction.apply(queue);
-    LOG.info("finished function which will enqueue records");
+      producerFunction.apply(queue);
   }
 }

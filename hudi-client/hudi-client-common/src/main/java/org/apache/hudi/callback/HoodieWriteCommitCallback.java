@@ -28,7 +28,11 @@ public interface HoodieWriteCommitCallback {
    * A callback method the user can implement to provide asynchronous handling of successful write.
    * This method will be called when a write operation is committed successfully.
    *
+   * fixme
+   *    实现，以在成功写入后、可以执行异步回调。
+   *
    * @param callbackMessage Callback msg, which will be sent to external system.
+   *                        回调消息，可以传递给其他系统
    */
   void call(HoodieWriteCommitCallbackMessage callbackMessage);
 

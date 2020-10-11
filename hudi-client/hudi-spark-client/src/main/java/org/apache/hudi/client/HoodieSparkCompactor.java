@@ -24,31 +24,26 @@ import org.apache.hudi.common.model.HoodieRecordPayload;
 import org.apache.hudi.common.table.timeline.HoodieInstant;
 import org.apache.hudi.common.util.Option;
 import org.apache.hudi.exception.HoodieException;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 import org.apache.spark.api.java.JavaRDD;
 
 import java.io.IOException;
 
-public class HoodieSparkCompactor<T extends HoodieRecordPayload> extends AbstractCompactor<T,
-    JavaRDD<HoodieRecord<T>>, JavaRDD<HoodieKey>, JavaRDD<WriteStatus>> {
-  private static final Logger LOG = LogManager.getLogger(HoodieSparkCompactor.class);
+public class HoodieSparkCompactor<T extends HoodieRecordPayload> extends AbstractCompactor<T, JavaRDD<HoodieRecord<T>>, JavaRDD<HoodieKey>, JavaRDD<WriteStatus>> {
 
   public HoodieSparkCompactor(AbstractHoodieWriteClient<T, JavaRDD<HoodieRecord<T>>, JavaRDD<HoodieKey>, JavaRDD<WriteStatus>> compactionClient) {
     super(compactionClient);
   }
 
+  // fixme 实现父类唯一方法
   @Override
   public void compact(HoodieInstant instant) throws IOException {
-    LOG.info("Compactor executing compaction " + instant);
+    // 唯一实现类，所以可以这么自信的强转
     SparkRDDWriteClient<T> writeClient = (SparkRDDWriteClient<T>)compactionClient;
     JavaRDD<WriteStatus> res = writeClient.compact(instant.getTimestamp());
     long numWriteErrors = res.collect().stream().filter(WriteStatus::hasErrors).count();
     if (numWriteErrors != 0) {
       // We treat even a single error in compaction as fatal
-      LOG.error("Compaction for instant (" + instant + ") failed with write errors. Errors :" + numWriteErrors);
-      throw new HoodieException(
-          "Compaction for instant (" + instant + ") failed with write errors. Errors :" + numWriteErrors);
+      throw new HoodieException("Compaction for instant (" + instant + ") failed with write errors. Errors :" + numWriteErrors);
     }
     // Commit compaction
     writeClient.commitCompaction(instant.getTimestamp(), res, Option.empty());

@@ -262,7 +262,8 @@ public class SparkRDDWriteClient<T extends HoodieRecordPayload> extends
                                     String compactionCommitTime) {
     List<HoodieWriteStat> writeStats = writeStatuses.map(WriteStatus::getStat).collect();
     finalizeWrite(table, compactionCommitTime, writeStats);
-    LOG.info("Committing Compaction " + compactionCommitTime + ". Finished with result " + metadata);
+
+    // 会发生压缩异常
     SparkCompactHelpers.newInstance().completeInflightCompaction(table, compactionCommitTime, metadata);
 
     if (compactionTimer != null) {
@@ -280,6 +281,7 @@ public class SparkRDDWriteClient<T extends HoodieRecordPayload> extends
 
   @Override
   protected JavaRDD<WriteStatus> compact(String compactionInstantTime, boolean shouldComplete) {
+
     HoodieSparkTable<T> table = HoodieSparkTable.create(config, context);
     HoodieTimeline pendingCompactionTimeline = table.getActiveTimeline().filterPendingCompactionTimeline();
     HoodieInstant inflightInstant = HoodieTimeline.getCompactionInflightInstant(compactionInstantTime);
@@ -291,6 +293,7 @@ public class SparkRDDWriteClient<T extends HoodieRecordPayload> extends
     HoodieWriteMetadata<JavaRDD<WriteStatus>> compactionMetadata = table.compact(context, compactionInstantTime);
     JavaRDD<WriteStatus> statuses = compactionMetadata.getWriteStatuses();
     if (shouldComplete && compactionMetadata.getCommitMetadata().isPresent()) {
+      // 可能发生 HoodieCompactionException
       completeCompaction(compactionMetadata.getCommitMetadata().get(), statuses, table, compactionInstantTime);
     }
     return statuses;

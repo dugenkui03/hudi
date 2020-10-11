@@ -28,19 +28,19 @@ import org.apache.hudi.exception.HoodieCommitCallbackException;
  * Factory help to create {@link HoodieWriteCommitCallback}.
  */
 public class HoodieCommitCallbackFactory {
-  public static HoodieWriteCommitCallback create(HoodieWriteConfig config) {
-    String callbackClass = config.getCallbackClass();
-    if (!StringUtils.isNullOrEmpty(callbackClass)) {
-      Object instance = ReflectionUtils.loadClass(callbackClass, config);
-      if (!(instance instanceof HoodieWriteCommitCallback)) {
-        throw new HoodieCommitCallbackException(callbackClass + " is not a subclass of "
-            + HoodieWriteCommitCallback.class.getSimpleName());
-      }
-      return (HoodieWriteCommitCallback) instance;
-    } else {
-      throw new HoodieCommitCallbackException(String.format("The value of the config option %s can not be null or "
-          + "empty", HoodieWriteCommitCallbackConfig.CALLBACK_CLASS_PROP));
+    public static HoodieWriteCommitCallback create(HoodieWriteConfig config) {
+        String callbackClass = config.getCallbackClass();
+        if (!StringUtils.isNullOrEmpty(callbackClass)) {
+            Object instance = ReflectionUtils.loadClass(callbackClass, config);
+            if (!(instance instanceof HoodieWriteCommitCallback)) {
+                throw new HoodieCommitCallbackException(callbackClass + " is not a subclass of "
+                        + HoodieWriteCommitCallback.class.getSimpleName());
+            }
+            return (HoodieWriteCommitCallback) instance;
+        } else {
+            throw new HoodieCommitCallbackException(String.format("The value of the config option %s can not be null or "
+                    + "empty", HoodieWriteCommitCallbackConfig.CALLBACK_CLASS_PROP));
+        }
     }
-  }
 
 }

@@ -23,15 +23,19 @@ import org.apache.hudi.exception.HoodieException;
 import java.util.Arrays;
 
 /**
- * Table's version that controls what version of writer/readers can actually read/write
- * to a given table.
+ * Table's version that controls what version of writer/readers
+ * can actually read/write to a given table.
+ *
+ * 表的版本可以控制 什么版本的读写可以在给定的表上进行。
  */
 public enum HoodieTableVersion {
   // < 0.6.0 versions
   ZERO(0),
-  // 0.6.0 onwards
+
+  // 0.6.0 onwards(向前)
   ONE(1);
 
+  // 版本号码
   private final int versionCode;
 
   HoodieTableVersion(int versionCode) {
@@ -46,6 +50,7 @@ public enum HoodieTableVersion {
     return ONE;
   }
 
+  // 写的还真复杂，但是通用
   static HoodieTableVersion versionFromCode(int versionCode) {
     return Arrays.stream(HoodieTableVersion.values())
         .filter(v -> v.versionCode == versionCode).findAny()

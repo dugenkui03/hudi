@@ -20,6 +20,8 @@ package org.apache.hudi.exception;
 
 /**
  * Exception thrown to indicate that a hoodie table is invalid.
+ *
+ * 表无效。
  */
 public class InvalidTableException extends HoodieException {
 

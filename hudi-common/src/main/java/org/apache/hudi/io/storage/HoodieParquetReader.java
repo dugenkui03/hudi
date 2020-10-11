@@ -33,8 +33,15 @@ import org.apache.parquet.avro.AvroParquetReader;
 import org.apache.parquet.avro.AvroReadSupport;
 import org.apache.parquet.hadoop.ParquetReader;
 
+/**
+ * ？复合读取？
+ */
 public class HoodieParquetReader<R extends IndexedRecord> implements HoodieFileReader {
+
+  // hadoop.路径
   private Path path;
+
+  // hadoop.配置
   private Configuration conf;
 
   public HoodieParquetReader(Configuration configuration, Path path) {

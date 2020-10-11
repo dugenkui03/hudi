@@ -75,8 +75,8 @@ public class HoodieReadClient<T extends HoodieRecordPayload> implements Serializ
    */
   public HoodieReadClient(HoodieSparkEngineContext context, String basePath) {
     this(context, HoodieWriteConfig.newBuilder().withPath(basePath)
-        // by default we use HoodieBloomIndex
-        .withIndexConfig(HoodieIndexConfig.newBuilder().withIndexType(HoodieIndex.IndexType.BLOOM).build()).build());
+            // by default we use HoodieBloomIndex
+            .withIndexConfig(HoodieIndexConfig.newBuilder().withIndexType(HoodieIndex.IndexType.BLOOM).build()).build());
   }
 
   /**
@@ -122,7 +122,7 @@ public class HoodieReadClient<T extends HoodieRecordPayload> implements Serializ
   private Option<String> convertToDataFilePath(Option<Pair<String, String>> partitionPathFileIDPair) {
     if (partitionPathFileIDPair.isPresent()) {
       HoodieBaseFile dataFile = hoodieTable.getBaseFileOnlyView()
-          .getLatestBaseFile(partitionPathFileIDPair.get().getLeft(), partitionPathFileIDPair.get().getRight()).get();
+              .getLatestBaseFile(partitionPathFileIDPair.get().getLeft(), partitionPathFileIDPair.get().getRight()).get();
       return Option.of(dataFile.getPath());
     } else {
       return Option.empty();
@@ -138,9 +138,9 @@ public class HoodieReadClient<T extends HoodieRecordPayload> implements Serializ
     assertSqlContext();
     JavaPairRDD<HoodieKey, Option<Pair<String, String>>> lookupResultRDD = checkExists(hoodieKeys);
     JavaPairRDD<HoodieKey, Option<String>> keyToFileRDD =
-        lookupResultRDD.mapToPair(r -> new Tuple2<>(r._1, convertToDataFilePath(r._2)));
+            lookupResultRDD.mapToPair(r -> new Tuple2<>(r._1, convertToDataFilePath(r._2)));
     List<String> paths = keyToFileRDD.filter(keyFileTuple -> keyFileTuple._2().isPresent())
-        .map(keyFileTuple -> keyFileTuple._2().get()).collect();
+            .map(keyFileTuple -> keyFileTuple._2().get()).collect();
 
     // record locations might be same for multiple keys, so need a unique list
     Set<String> uniquePaths = new HashSet<>(paths);
@@ -148,7 +148,7 @@ public class HoodieReadClient<T extends HoodieRecordPayload> implements Serializ
     StructType schema = originalDF.schema();
     JavaPairRDD<HoodieKey, Row> keyRowRDD = originalDF.javaRDD().mapToPair(row -> {
       HoodieKey key = new HoodieKey(row.getAs(HoodieRecord.RECORD_KEY_METADATA_FIELD),
-          row.getAs(HoodieRecord.PARTITION_PATH_METADATA_FIELD));
+              row.getAs(HoodieRecord.PARTITION_PATH_METADATA_FIELD));
       return new Tuple2<>(key, row);
     });
 
@@ -164,10 +164,10 @@ public class HoodieReadClient<T extends HoodieRecordPayload> implements Serializ
    */
   public JavaPairRDD<HoodieKey, Option<Pair<String, String>>> checkExists(JavaRDD<HoodieKey> hoodieKeys) {
     return index.tagLocation(hoodieKeys.map(k -> new HoodieRecord<>(k, null)), context, hoodieTable)
-        .mapToPair(hr -> new Tuple2<>(hr.getKey(), hr.isCurrentLocationKnown()
-            ? Option.of(Pair.of(hr.getPartitionPath(), hr.getCurrentLocation().getFileId()))
-            : Option.empty())
-        );
+            .mapToPair(hr -> new Tuple2<>(hr.getKey(), hr.isCurrentLocationKnown()
+                    ? Option.of(Pair.of(hr.getPartitionPath(), hr.getCurrentLocation().getFileId()))
+                    : Option.empty())
+            );
   }
 
   /**
@@ -199,10 +199,10 @@ public class HoodieReadClient<T extends HoodieRecordPayload> implements Serializ
    */
   public List<Pair<String, HoodieCompactionPlan>> getPendingCompactions() {
     HoodieTableMetaClient metaClient =
-        new HoodieTableMetaClient(hadoopConf, hoodieTable.getMetaClient().getBasePath(), true);
+            new HoodieTableMetaClient(hadoopConf, hoodieTable.getMetaClient().getBasePath(), true);
     return CompactionUtils.getAllPendingCompactionPlans(metaClient).stream()
-        .map(
-            instantWorkloadPair -> Pair.of(instantWorkloadPair.getKey().getTimestamp(), instantWorkloadPair.getValue()))
-        .collect(Collectors.toList());
+            .map(
+                    instantWorkloadPair -> Pair.of(instantWorkloadPair.getKey().getTimestamp(), instantWorkloadPair.getValue()))
+            .collect(Collectors.toList());
   }
 }

@@ -30,25 +30,34 @@ import java.io.Serializable;
 
 /**
  * Class to provide schema for reading data and also writing into a Hoodie table.
+ *
+ * 对hoodie表的schema进行描述的类。
  */
 @PublicAPIClass(maturity = ApiMaturityLevel.STABLE)
 public abstract class SchemaProvider implements Serializable {
 
+  // 配置：存放k-v
   protected TypedProperties config;
 
+  // spark上下文
   protected JavaSparkContext jssc;
 
+  // 构造参数
   protected SchemaProvider(TypedProperties props, JavaSparkContext jssc) {
     this.config = props;
     this.jssc = jssc;
   }
 
   @PublicAPIMethod(maturity = ApiMaturityLevel.STABLE)
-  public abstract Schema getSourceSchema();
-
-  @PublicAPIMethod(maturity = ApiMaturityLevel.STABLE)
   public Schema getTargetSchema() {
     // by default, use source schema as target for hoodie table as well
     return getSourceSchema();
   }
+
+  /**
+   * fixme @return 获取 schema
+   */
+  @PublicAPIMethod(maturity = ApiMaturityLevel.STABLE)
+  public abstract Schema getSourceSchema();
+
 }

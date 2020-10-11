@@ -45,6 +45,8 @@ import java.util.stream.Stream;
 
 /**
  * Class to be used to generate test data.
+ *
+ * 用来产生测试数据的类
  */
 public class HoodieExampleDataGenerator<T extends HoodieRecordPayload<T>> {
 
@@ -54,6 +56,26 @@ public class HoodieExampleDataGenerator<T extends HoodieRecordPayload<T>> {
 
   public static final String[] DEFAULT_PARTITION_PATHS =
       {DEFAULT_FIRST_PARTITION_PATH, DEFAULT_SECOND_PARTITION_PATH, DEFAULT_THIRD_PARTITION_PATH};
+
+
+  //{
+  //    "type":"record",
+  //    "name":"triprec",
+  //    "fields":[
+  //        {
+  //            "name":"ts",
+  //            "type":"double"
+  //        },
+  //        {
+  //            "name":"uuid",
+  //            "type":"string"
+  //        },
+  //        {
+  //            "name":"...",
+  //            "type":"..."
+  //        }
+  //    ]
+  //}
   public static String TRIP_EXAMPLE_SCHEMA = "{\"type\": \"record\",\"name\": \"triprec\",\"fields\": [ "
           + "{\"name\": \"ts\",\"type\": \"double\"},{\"name\": \"uuid\", \"type\": \"string\"},"
           + "{\"name\": \"rider\", \"type\": \"string\"},{\"name\": \"driver\", \"type\": \"string\"},"

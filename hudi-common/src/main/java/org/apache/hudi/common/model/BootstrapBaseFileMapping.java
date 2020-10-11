@@ -27,6 +27,7 @@ import org.apache.hudi.common.bootstrap.FileStatusUtils;
  */
 public class BootstrapBaseFileMapping implements Serializable {
 
+  // hoodie文件组id
   private final HoodieFileGroupId fileGroupId;
 
   private final HoodieFileStatus bootstrapFileStatus;

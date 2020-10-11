@@ -59,6 +59,7 @@ public class CollectionUtils {
     return Stream.of(elements).collect(Collectors.toSet());
   }
 
+  // 修改名称为 createImmutableSingletonMap
   public static <K,V> Map<K, V> createImmutableMap(final K key, final V value) {
     return Collections.unmodifiableMap(Collections.singletonMap(key, value));
   }
@@ -68,6 +69,7 @@ public class CollectionUtils {
     return Collections.unmodifiableList(Stream.of(elements).collect(Collectors.toList()));
   }
 
+  // unmodifiableMap
   public static <K,V> Map<K,V> createImmutableMap(final Map<K,V> map) {
     return Collections.unmodifiableMap(map);
   }

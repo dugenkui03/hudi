@@ -28,35 +28,49 @@ import java.io.Serializable;
 
 /**
  * Statistics about a single Hoodie write operation.
+ *
+ * 单个 hoodie 写操作的统计数据。
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class HoodieWriteStat implements Serializable {
 
+  // 没有提交？
   public static final String NULL_COMMIT = "null";
 
   /**
    * Id of the file being written.
+   *
+   * 被写的文件的id
    */
   private String fileId;
 
   /**
-   * Relative path to the file from the base path.
+   * Relative path from the base path to the file.
+   *
+   * 从基本路径到文件的相对路径。
    */
   private String path;
 
   /**
    * The previous version of the file. (null if this is the first version. i.e insert)
+   *
+   * 文件之前的版本：如果该版本是第一个版本，则该字段为null;
    */
   private String prevCommit;
 
   /**
-   * Total number of records written for this file. - for updates, its the entire number of records in the file - for
-   * inserts, its the actual number of records inserted.
+   * Total number of records written for this file.
+   * - for updates, its the entire number of records in the file
+   * - for inserts, its the actual number of records inserted.
+   *
+   * 写入到该文件的所有记录汇总。
    */
   private long numWrites;
 
   /**
    * Total number of records deleted.
+   *
+   * 删除的记录。
    */
   private long numDeletes;
 

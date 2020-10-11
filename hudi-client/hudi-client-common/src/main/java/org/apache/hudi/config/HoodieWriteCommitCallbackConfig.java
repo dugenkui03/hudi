@@ -29,13 +29,16 @@ import java.util.Properties;
  */
 public class HoodieWriteCommitCallbackConfig extends DefaultHoodieConfig {
 
+  // 回调前缀
   public static final String CALLBACK_PREFIX = "hoodie.write.commit.callback.";
+
   public static final String CALLBACK_ON = CALLBACK_PREFIX + "on";
   public static final boolean DEFAULT_CALLBACK_ON = false;
 
   public static final String CALLBACK_CLASS_PROP = CALLBACK_PREFIX + "class";
   public static final String DEFAULT_CALLBACK_CLASS_PROP = "org.apache.hudi.callback.impl.HoodieWriteCommitHttpCallback";
 
+  // HTTP回调配置
   // ***** HTTP callback configs *****
   public static final String CALLBACK_HTTP_URL_PROP = CALLBACK_PREFIX + "http.url";
   public static final String CALLBACK_HTTP_API_KEY = CALLBACK_PREFIX + "http.api.key";

@@ -122,11 +122,11 @@ public abstract class AsyncCompactService extends HoodieAsyncService {
   @Override
   protected Pair<CompletableFuture, ExecutorService> startService() {
     ExecutorService executor = Executors.newFixedThreadPool(maxConcurrentCompaction,
-        r -> {
-        Thread t = new Thread(r, "async_compact_thread");
-        t.setDaemon(isRunInDaemonMode());
-        return t;
-      });
+            r -> {
+              Thread t = new Thread(r, "async_compact_thread");
+              t.setDaemon(isRunInDaemonMode());
+              return t;
+            });
     return Pair.of(CompletableFuture.allOf(IntStream.range(0, maxConcurrentCompaction).mapToObj(i -> CompletableFuture.supplyAsync(() -> {
       try {
         // Set Compactor Pool Name for allowing users to prioritize compaction

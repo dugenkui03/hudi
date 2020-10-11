@@ -27,15 +27,21 @@ import java.io.Serializable;
 
 /**
  * Base class for all AVRO record based payloads, that can be ordered based on a field.
+ *
+ * 记录 AVRO 为基础的数据。
  */
 public abstract class BaseAvroPayload implements Serializable {
   /**
    * Avro data extracted from the source converted to bytes.
+   *
+   * fixme 数据源转换而来的字节数组
    */
   public final byte[] recordBytes;
 
   /**
    * For purposes of preCombining.
+   *
+   * 用于 预先组合-pre-combine
    */
   protected final Comparable orderingVal;
 

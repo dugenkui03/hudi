@@ -81,10 +81,10 @@ public class FileSystemViewManager {
   }
 
   /**
-   * Main API to get the file-system view for the base-path.
-   * 
-   * @param basePath
-   * @return
+   * @param basePath 文件系统视图指定的路径
+   *
+   * @return Main API to get the file-system view for the base-path
+   *         获取指定路径的文件系统视图
    */
   public SyncableFileSystemView getFileSystemView(String basePath) {
     return globalViewMap.computeIfAbsent(basePath, (path) -> {

@@ -27,20 +27,33 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 /**
- * Wrapper for metrics-related operations.
+ * Wrapper(封装) for metrics-related operations.
+ *
+ * 对于指标相关操作的封装。
  */
 public class HoodieMetrics {
 
+  // 静态日志类
   private static final Logger LOG = LogManager.getLogger(HoodieMetrics.class);
-  // Some timers
+
+  /**
+   * Some timers(定时器)
+   */
+
+  // 回滚定时器名称
   public String rollbackTimerName = null;
+  // 清除定时器名称
   public String cleanTimerName = null;
+  // 提交定时器名称
   public String commitTimerName = null;
+  //
   public String deltaCommitTimerName = null;
   public String finalizeTimerName = null;
   public String compactionTimerName = null;
   public String indexTimerName = null;
+  // 写配置
   private HoodieWriteConfig config;
+  // 表名称
   private String tableName;
   private Timer rollbackTimer = null;
   private Timer cleanTimer = null;

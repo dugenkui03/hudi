@@ -25,10 +25,14 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Lightweight Metrics Registry to track Hudi events.
+ *
+ * 跟踪hudi事件的 轻量级指标注册器。
  */
 public class Registry {
-  ConcurrentHashMap<String, Counter> counters = new ConcurrentHashMap<>();
+  // todo 添加 private??
   final String name;
+
+  ConcurrentHashMap<String, Counter> counters = new ConcurrentHashMap<>();
 
   private static ConcurrentHashMap<String, Registry> registryMap = new ConcurrentHashMap<>();
 

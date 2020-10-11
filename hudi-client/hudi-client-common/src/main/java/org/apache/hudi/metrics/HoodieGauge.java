@@ -22,12 +22,17 @@ import com.codahale.metrics.Gauge;
 
 /**
  * Similar to {@link Gauge}, but metric value can be updated by {@link #setValue(T)}.
+ *
+ * 和 Gauge 类似，但是指标值可以被 setValue 更新
  */
 public class HoodieGauge<T> implements Gauge<T> {
+  // volatile类型的
   private volatile T value;
 
   /**
    * Create an instance with a default value.
+   *
+   * 使用默认值创建对象，可以为null。
    */
   public HoodieGauge(T value) {
     this.value = value;
@@ -35,6 +40,8 @@ public class HoodieGauge<T> implements Gauge<T> {
 
   /**
    * Set the metric to a new value.
+   *
+   * 更新指标值。
    */
   public void setValue(T value) {
     this.value = value;
@@ -44,6 +51,7 @@ public class HoodieGauge<T> implements Gauge<T> {
    * Returns the metric's current value.
    *
    * @return the metric's current value
+   *         指标的当前值
    */
   @Override
   public T getValue() {

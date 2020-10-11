@@ -23,29 +23,36 @@ import java.util.Properties;
 
 /**
  * Default Way to load Hoodie config through a {@link java.util.Properties}.
+ *
+ * 加载属性的默认方式是 Properties
  */
 public class DefaultHoodieConfig implements Serializable {
 
+  // serialVersionUID = 4112578634029874840L;
   protected final Properties props;
 
+  // 构造实例的时候初始化
   public DefaultHoodieConfig(Properties props) {
     this.props = props;
   }
 
+  public Properties getProps() {
+    return props;
+  }
+
+  // 如果 condition 为真，则为props设置新属性<propName,defaultValue>
   public static void setDefaultOnCondition(Properties props, boolean condition, String propName, String defaultValue) {
     if (condition) {
       props.setProperty(propName, defaultValue);
     }
   }
 
+
+  // 如果 condition 为真，将 config 所有的属性添加到 config
   public static void setDefaultOnCondition(Properties props, boolean condition, DefaultHoodieConfig config) {
     if (condition) {
       props.putAll(config.getProps());
     }
-  }
-
-  public Properties getProps() {
-    return props;
   }
 
 }

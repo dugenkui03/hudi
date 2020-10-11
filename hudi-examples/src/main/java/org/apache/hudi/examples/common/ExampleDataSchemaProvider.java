@@ -26,6 +26,8 @@ import org.apache.spark.api.java.JavaSparkContext;
 
 /**
  * the example SchemaProvider of example json data from uber.
+ *
+ *
  */
 public class ExampleDataSchemaProvider extends SchemaProvider {
 
@@ -33,6 +35,7 @@ public class ExampleDataSchemaProvider extends SchemaProvider {
     super(props, jssc);
   }
 
+  // 唯一需要实现的类：获取某种schema。
   @Override
   public Schema getSourceSchema() {
     return HoodieExampleDataGenerator.avroSchema;

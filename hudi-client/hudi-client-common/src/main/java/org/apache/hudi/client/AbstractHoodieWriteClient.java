@@ -179,13 +179,13 @@ public abstract class AbstractHoodieWriteClient<T extends HoodieRecordPayload, I
 
     try {
       activeTimeline.saveAsComplete(new HoodieInstant(true, commitActionType, instantTime),
-          Option.of(metadata.toJsonString().getBytes(StandardCharsets.UTF_8)));
+              Option.of(metadata.toJsonString().getBytes(StandardCharsets.UTF_8)));
       postCommit(table, metadata, instantTime, extraMetadata);
       emitCommitMetrics(instantTime, metadata, commitActionType);
       LOG.info("Committed " + instantTime);
     } catch (IOException e) {
       throw new HoodieCommitException("Failed to complete commit " + config.getBasePath() + " at time " + instantTime,
-          e);
+              e);
     }
 
     // callback if needed.
@@ -206,12 +206,12 @@ public abstract class AbstractHoodieWriteClient<T extends HoodieRecordPayload, I
       if (writeTimer != null) {
         long durationInMs = metrics.getDurationInMs(writeTimer.stop());
         metrics.updateCommitMetrics(HoodieActiveTimeline.COMMIT_FORMATTER.parse(instantTime).getTime(), durationInMs,
-            metadata, actionType);
+                metadata, actionType);
         writeTimer = null;
       }
     } catch (ParseException e) {
       throw new HoodieCommitException("Failed to complete commit " + config.getBasePath() + " at time " + instantTime
-          + "Instant time is not of valid format", e);
+              + "Instant time is not of valid format", e);
     }
   }
 
@@ -242,9 +242,9 @@ public abstract class AbstractHoodieWriteClient<T extends HoodieRecordPayload, I
     HoodieTable<T, I, K, O> table = createTable(config, hadoopConf);
     HoodieTimeline inflightTimeline = table.getMetaClient().getCommitsTimeline().filterPendingExcludingCompaction();
     Option<String> instant = Option.fromJavaOptional(
-        inflightTimeline.getReverseOrderedInstants().map(HoodieInstant::getTimestamp).findFirst());
+            inflightTimeline.getReverseOrderedInstants().map(HoodieInstant::getTimestamp).findFirst());
     if (instant.isPresent() && HoodieTimeline.compareTimestamps(instant.get(), HoodieTimeline.LESSER_THAN_OR_EQUALS,
-        HoodieTimeline.FULL_BOOTSTRAP_INSTANT_TS)) {
+            HoodieTimeline.FULL_BOOTSTRAP_INSTANT_TS)) {
       LOG.info("Found pending bootstrap instants. Rolling them back");
       table.rollbackBootstrap(context, HoodieActiveTimeline.createNewInstantTime());
       LOG.info("Finished rolling back pending bootstrap");
@@ -400,10 +400,10 @@ public abstract class AbstractHoodieWriteClient<T extends HoodieRecordPayload, I
 
   protected void runAnyPendingCompactions(HoodieTable<T, I, K, O> table) {
     table.getActiveTimeline().getCommitsAndCompactionTimeline().filterPendingCompactionTimeline().getInstants()
-        .forEach(instant -> {
-          LOG.info("Running previously failed inflight compaction at instant " + instant);
-          compact(instant.getTimestamp(), true);
-        });
+            .forEach(instant -> {
+              LOG.info("Running previously failed inflight compaction at instant " + instant);
+              compact(instant.getTimestamp(), true);
+            });
   }
 
   /**
@@ -502,8 +502,8 @@ public abstract class AbstractHoodieWriteClient<T extends HoodieRecordPayload, I
     try {
       HoodieTable<T, I, K, O> table = createTable(config, hadoopConf);
       Option<HoodieInstant> commitInstantOpt = Option.fromJavaOptional(table.getActiveTimeline().getCommitsTimeline().getInstants()
-          .filter(instant -> HoodieActiveTimeline.EQUALS.test(instant.getTimestamp(), commitInstantTime))
-          .findFirst());
+              .filter(instant -> HoodieActiveTimeline.EQUALS.test(instant.getTimestamp(), commitInstantTime))
+              .findFirst());
       if (commitInstantOpt.isPresent()) {
         HoodieRollbackMetadata rollbackMetadata = table.rollback(context, rollbackInstantTime, commitInstantOpt.get(), true);
         if (timerContext != null) {
@@ -536,9 +536,9 @@ public abstract class AbstractHoodieWriteClient<T extends HoodieRecordPayload, I
       if (timerContext != null) {
         final long durationInMs = metrics.getDurationInMs(timerContext.stop());
         final long totalFilesDeleted = restoreMetadata.getHoodieRestoreMetadata().values().stream()
-            .flatMap(Collection::stream)
-            .mapToLong(HoodieRollbackMetadata::getTotalFilesDeleted)
-            .sum();
+                .flatMap(Collection::stream)
+                .mapToLong(HoodieRollbackMetadata::getTotalFilesDeleted)
+                .sum();
         metrics.updateRollbackMetrics(durationInMs, totalFilesDeleted);
       }
       return restoreMetadata;
@@ -560,8 +560,8 @@ public abstract class AbstractHoodieWriteClient<T extends HoodieRecordPayload, I
       long durationMs = metrics.getDurationInMs(timerContext.stop());
       metrics.updateCleanMetrics(durationMs, metadata.getTotalFilesDeleted());
       LOG.info("Cleaned " + metadata.getTotalFilesDeleted() + " files"
-          + " Earliest Retained Instant :" + metadata.getEarliestCommitToRetain()
-          + " cleanerElapsedMs" + durationMs);
+              + " Earliest Retained Instant :" + metadata.getEarliestCommitToRetain()
+              + " cleanerElapsedMs" + durationMs);
     }
     return metadata;
   }
@@ -618,12 +618,12 @@ public abstract class AbstractHoodieWriteClient<T extends HoodieRecordPayload, I
     LOG.info("Generate a new instant time: " + instantTime + " action: " + actionType);
     // if there are pending compactions, their instantTime must not be greater than that of this instant time
     metaClient.getActiveTimeline().filterPendingCompactionTimeline().lastInstant().ifPresent(latestPending ->
-        ValidationUtils.checkArgument(
-            HoodieTimeline.compareTimestamps(latestPending.getTimestamp(), HoodieTimeline.LESSER_THAN, instantTime),
-        "Latest pending compaction instant time must be earlier than this instant time. Latest Compaction :"
-            + latestPending + ",  Ingesting at " + instantTime));
+            ValidationUtils.checkArgument(
+                    HoodieTimeline.compareTimestamps(latestPending.getTimestamp(), HoodieTimeline.LESSER_THAN, instantTime),
+                    "Latest pending compaction instant time must be earlier than this instant time. Latest Compaction :"
+                            + latestPending + ",  Ingesting at " + instantTime));
     metaClient.getActiveTimeline().createNewInstant(new HoodieInstant(HoodieInstant.State.REQUESTED, actionType,
-        instantTime));
+            instantTime));
   }
 
   /**
@@ -645,15 +645,20 @@ public abstract class AbstractHoodieWriteClient<T extends HoodieRecordPayload, I
   public boolean scheduleCompactionAtInstant(String instantTime, Option<Map<String, String>> extraMetadata) throws HoodieIOException {
     LOG.info("Scheduling compaction at instant time :" + instantTime);
     Option<HoodieCompactionPlan> plan = createTable(config, hadoopConf)
-        .scheduleCompaction(context, instantTime, extraMetadata);
+            .scheduleCompaction(context, instantTime, extraMetadata);
     return plan.isPresent();
   }
 
   /**
    * Performs Compaction for the workload stored in instant-time.
    *
+   * 对即时存储的数据进行压缩。
+   *
    * @param compactionInstantTime Compaction Instant Time
+   *                              "压缩瞬时时间"
+   *
    * @return RDD of WriteStatus to inspect errors and counts
+   *
    */
   public O compact(String compactionInstantTime) {
     return compact(compactionInstantTime, config.shouldAutoCommit());
@@ -694,10 +699,10 @@ public abstract class AbstractHoodieWriteClient<T extends HoodieRecordPayload, I
     HoodieTable<T, I, K, O> table = createTable(config, hadoopConf);
     HoodieTimeline inflightTimeline = table.getMetaClient().getCommitsTimeline().filterPendingExcludingCompaction();
     List<String> commits = inflightTimeline.getReverseOrderedInstants().map(HoodieInstant::getTimestamp)
-        .collect(Collectors.toList());
+            .collect(Collectors.toList());
     for (String commit : commits) {
       if (HoodieTimeline.compareTimestamps(commit, HoodieTimeline.LESSER_THAN_OR_EQUALS,
-          HoodieTimeline.FULL_BOOTSTRAP_INSTANT_TS)) {
+              HoodieTimeline.FULL_BOOTSTRAP_INSTANT_TS)) {
         rollBackInflightBootstrap();
         break;
       } else {
@@ -773,11 +778,11 @@ public abstract class AbstractHoodieWriteClient<T extends HoodieRecordPayload, I
     try {
       HoodieActiveTimeline activeTimeline = metaClient.getActiveTimeline();
       Option<HoodieInstant> lastInstant =
-          activeTimeline.filterCompletedInstants().filter(s -> s.getAction().equals(metaClient.getCommitActionType()))
-              .lastInstant();
+              activeTimeline.filterCompletedInstants().filter(s -> s.getAction().equals(metaClient.getCommitActionType()))
+                      .lastInstant();
       if (lastInstant.isPresent()) {
         HoodieCommitMetadata commitMetadata = HoodieCommitMetadata.fromBytes(
-            activeTimeline.getInstantDetails(lastInstant.get()).get(), HoodieCommitMetadata.class);
+                activeTimeline.getInstantDetails(lastInstant.get()).get(), HoodieCommitMetadata.class);
         if (commitMetadata.getExtraMetadata().containsKey(HoodieCommitMetadata.SCHEMA_KEY)) {
           config.setSchema(commitMetadata.getExtraMetadata().get(HoodieCommitMetadata.SCHEMA_KEY));
         } else {

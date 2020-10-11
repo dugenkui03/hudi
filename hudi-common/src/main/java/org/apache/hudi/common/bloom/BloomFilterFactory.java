@@ -22,6 +22,8 @@ import org.apache.hadoop.util.hash.Hash;
 
 /**
  * A Factory class to generate different versions of {@link BloomFilter}.
+ *
+ * 创建不同版本的BloomFilter。
  */
 public class BloomFilterFactory {
 
@@ -33,7 +35,10 @@ public class BloomFilterFactory {
    * @param bloomFilterTypeCode bloom filter type code
    * @return the {@link BloomFilter} thus created
    */
-  public static BloomFilter createBloomFilter(int numEntries, double errorRate, int maxNumberOfEntries,
+  public static BloomFilter createBloomFilter(int numEntries,
+                                              double errorRate,
+                                              int maxNumberOfEntries,
+                                              // 过滤器类型
                                               String bloomFilterTypeCode) {
     if (bloomFilterTypeCode.equalsIgnoreCase(BloomFilterTypeCode.SIMPLE.name())) {
       return new SimpleBloomFilter(numEntries, errorRate, Hash.MURMUR_HASH);

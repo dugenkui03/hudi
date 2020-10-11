@@ -22,6 +22,8 @@ import java.io.Closeable;
 
 /**
  * Interface for implementing a Reporter.
+ *
+ * 实现reporter的接口。
  */
 public abstract class MetricsReporter {
 
