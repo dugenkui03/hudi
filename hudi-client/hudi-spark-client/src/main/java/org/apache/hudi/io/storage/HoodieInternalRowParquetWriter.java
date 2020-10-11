@@ -31,8 +31,11 @@ import java.io.IOException;
 /**
  * Parquet's impl of {@link HoodieInternalRowFileWriter} to write {@link InternalRow}s.
  */
-public class HoodieInternalRowParquetWriter extends ParquetWriter<InternalRow>
-    implements HoodieInternalRowFileWriter {
+public class HoodieInternalRowParquetWriter
+        // hadoop
+        extends ParquetWriter<InternalRow>
+        // boolean canWrite();
+        implements HoodieInternalRowFileWriter {
 
   private final Path file;
   private final HoodieWrapperFileSystem fs;
