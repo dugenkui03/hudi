@@ -18,6 +18,9 @@
 
 package org.apache.hudi.exception;
 
+/**
+ * 运行时异常。
+ */
 public class HoodieCompactionException extends HoodieException {
 
   public HoodieCompactionException(String msg) {

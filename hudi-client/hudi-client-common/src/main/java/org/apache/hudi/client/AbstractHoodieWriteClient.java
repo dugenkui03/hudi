@@ -652,8 +652,13 @@ public abstract class AbstractHoodieWriteClient<T extends HoodieRecordPayload, I
   /**
    * Performs Compaction for the workload stored in instant-time.
    *
+   * 对即时存储的数据进行压缩。
+   *
    * @param compactionInstantTime Compaction Instant Time
+   *                              "压缩瞬时时间"
+   *
    * @return RDD of WriteStatus to inspect errors and counts
+   *
    */
   public O compact(String compactionInstantTime) {
     return compact(compactionInstantTime, config.shouldAutoCommit());

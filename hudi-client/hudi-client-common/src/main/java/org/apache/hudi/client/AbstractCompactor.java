@@ -26,21 +26,26 @@ import java.io.Serializable;
 
 /**
  * Run one round of compaction.
+ *
+ * 进行一轮压缩，其子类可序列化的。
  */
 public abstract class AbstractCompactor<T extends HoodieRecordPayload, I, K, O> implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
+  // 不可序列化的
+  // protected 可以被子类直接引用
   protected transient AbstractHoodieWriteClient<T, I, K, O> compactionClient;
 
   public AbstractCompactor(AbstractHoodieWriteClient<T, I, K, O> compactionClient) {
     this.compactionClient = compactionClient;
   }
 
-  public abstract void compact(HoodieInstant instant) throws IOException;
-
+  // 这jb，不就是个 setter方法嘛！！！！！
   public void updateWriteClient(AbstractHoodieWriteClient<T, I, K, O> writeClient) {
     this.compactionClient = writeClient;
   }
+
+  public abstract void compact(HoodieInstant instant) throws IOException;
 
 }
